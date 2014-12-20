@@ -1,0 +1,188 @@
+{% load staticfiles %}
+{% load static %}
+
+
+
+{% csrf_token %}
+<html lang="en-US">
+<meta charset="UTF-8">
+
+    <Title>
+        CMS Test
+    </title>
+  <head>
+  <!-- ###
+    <script type="text/javascript" src="/static/inandout/js/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="/static/inandout/js/jquery.tablesorter.js"></script>
+      -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/static/inandout/js/ddsmoothmenu.js"></script>
+    <script type="text/javascript" src="/static/inandout/js/scripts.js"></script>
+
+
+    <script>
+        //~ setInterval(function() {
+                  //~ window.location.reload();
+                //~ }, 900000); 
+    </script>
+		
+	<!--<link rel="stylesheet" type="text/css" href="{% static 'core/css/demo.css' %}" media="screen" />-->
+	<link rel="stylesheet" type="text/css" href="{% static 'inandout/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'inandout/css/table.css' %}" />
+	<!--<link rel="stylesheet" type="text/css" href="{% static 'core/css/reset.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'core/css/text.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'core/css/960.css' %}" />-->
+
+	<link href='http://fonts.googleapis.com/css?family=Amaranth' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+	
+<!--
+	<meta http-equiv="refresh" content="900"> ###
+-->
+    <style> 
+    body {
+        background-image: url("{% static 'inandout/images/background_1920x1084.png' %}");
+    }
+    </style>
+    
+  </head>
+
+  <!DOCTYPE HTML>
+
+
+</head>
+
+<body>
+
+<!-- Begin Wrapper -->
+<div id="wrapper">
+
+
+	<!-- Begin Sidebar -->
+    <div id="sidebar">
+        <!--  <div id="logo"><a href="/"><img src="/static/core/images/logo.png" alt="Snapnode" /></a></div> -->
+
+        <div id="log-box">
+        {% block user_zone %}
+        {% endblock %}
+        {% if user.is_authenticated %}
+            <h1><font color="#c9731f">Welcome, {{ user.first_name }}.</font></h1>
+            Your last login was: {{ user.last_login}}
+            <a href="/core/logout/">Logout</a>
+        {%elif  display_type == "Login" %}
+        {% else %}
+            <h1><font color="#c9731f">Welcome, Guest!</font></h1>
+            <p>Please ..
+                <a href="/core/register/" id="id_register">|Register|</a> or 
+                <a href="/core/login/" id="id_login">|Login|</a>
+            </p>
+        {% endif %}</div>
+
+    <!-- Begin Menu -->
+    <div id="menu" class="menu-v">
+      <ul>
+        <li><a href="/" class="active">Home</a>
+        </li>
+        <li><a href="/product/product_index/">Products</a>
+            <ul>
+                <li><a href="/product/product_index/">Products Subtab #1</a></li>
+                <li><a href="/product/product_index/">Products Subtab #2</a></li>
+            </ul>
+        </li>
+        <li><a href="/blog/blog_index/">Blogs</a>
+            <ul>
+                <li><a href="/blog/blog_index/">Blogs Subtab #1</a></li>
+                <li><a href="/blog/blog_index/">Blogs Subtab #2</a></li>
+            </ul>
+        </li>
+        <li><a href="/testamonial/testamonial_index/">Testamonials</a>
+            <ul>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #1</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #2</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #3</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #4</a></li>
+            </ul>
+        </li>
+
+        <li><a href="/about_us/" >About Us</a></li>
+        <li><a href="/contact_us/" >Contact</a></li>
+
+      </ul>
+    </div>
+    <!-- End Menu -->
+    </div>
+    <!-- End Sidebar -->
+
+
+            
+                <center><h3><img src="/static/inandout/images/logo_700x180.png" alt="Login Using Sidebar" /></h3></center>
+
+
+
+    <!-- Begin Nav bar top-menu  -->
+        <nav>
+          <ul class="nav">
+            <li><a href="/" class="active">Home</a>
+        </li>
+        <li><a href="/product/product_index/">Products</a>
+            <ul>
+                <li><a href="/product/product_index/">Products Subtab #1</a></li>
+                <li><a href="/product/product_index/">Products Subtab #2</a></li>
+            </ul>
+        </li>
+        <li><a href="/blog/blog_index/">Blogs</a>
+            <ul>
+                <li><a href="/blog/blog_index/">Blogs Subtab #1</a></li>
+                <li><a href="/blog/blog_index/">Blogs Subtab #2</a></li>
+            </ul>
+        </li>
+        <li><a href="/testamonial/testamonial_index/">Testamonials</a>
+            <ul>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #1</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #2</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #3</a></li>
+                <li><a href="/testamonial/testamonial_index/">Testamonials Subtab #4</a></li>
+            </ul>
+        </li>
+
+        <li><a href="/about_us/" >About Us</a></li>
+        <li><a href="/contact_us/" >Contact</a></li>
+
+          </ul>
+        </nav>
+    <!-- End Nav bar top-menu   -->
+
+    <!-- Begin Content -->
+        <div id="content">
+            
+            
+            {% if user.is_authenticated or  display_type == "Register" %}
+                
+            {%elif  display_type == "Login" %}
+            {% else %}
+                
+            {% endif %}
+
+
+            
+                {% block content %}
+                {% endblock %}
+           
+
+        </div>
+        
+        
+    
+    <div class="clear"></div>
+	<!-- End Content -->
+
+
+    
+	
+</div>
+<!-- End Wrapper -->
+<div class="clear"></div>
+
+</body>
+</html>
