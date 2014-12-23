@@ -20,7 +20,9 @@
 {% if testamonial_list %}
     <ul>
     {% for testamonial in testamonial_list %}
-        <li><a href="../testamonial_detail/{{ testamonial.id }}/">{{ testamonial.nickname }}</a></li>
+    	{% if testamonial.is_active %}
+        	<li><a href="../testamonial_detail/{{ testamonial.id }}/">{{ testamonial.nickname }}</a></li>
+    	{% endif %}
     {% endfor %}
     </ul>
 {% else %}

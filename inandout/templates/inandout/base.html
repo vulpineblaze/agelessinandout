@@ -19,6 +19,7 @@
 
     <script type="text/javascript" src="/static/inandout/js/ddsmoothmenu.js"></script>
     <script type="text/javascript" src="/static/inandout/js/scripts.js"></script>
+    <script type="text/javascript" src="/static/inandout/js/main.js"></script>
 
 
     <script>
@@ -42,10 +43,68 @@
 -->
     <style> 
     body {
-        background-image: url("{% static 'inandout/images/background_1920x1084.png' %}");
+        background-image: url("{% static basepage.background_image %}");
     }
     </style>
+
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+    <script type="text/javascript">
+        function signinCallback(authResult) {
+          if (authResult['status']['signed_in']) {
+            // Update the app to reflect a signed in user
+            // Hide the sign-in button now that the user is authorized, for example:
+            // document.getElementById('signinButton').setAttribute('style', 'display: none;');
+            // document.getElementById('gConnect').setAttribute('style', 'display: none;');
+            document.getElementById('signinButton').remove();
+            document.getElementById('gConnect').remove();
+
+
+            //document.getElementById('guest_name_div').innerHTML = "Paragraph changed!";
+          } else {
+            // Update the app to reflect a signed out user
+            // Possible error values:
+            //   "user_signed_out" - User is signed-out
+            //   "access_denied" - User denied access to your app
+            //   "immediate_failed" - Could not automatically log in the user
+
+            
+            console.log('Sign-in state: ' + authResult['error']);
+          }
+        }
+        function onSignInCallback(resp) {
+            gapi.client.load('plus', 'v1', apiClientLoaded);
+          }
+
+          /**
+           * Sets up an API call after the Google API client loads.
+           */
+          function apiClientLoaded() {
+            gapi.client.plus.people.get({userId: 'me'}).execute(handleEmailResponse);
+          }
+          function handleEmailResponse(resp) {
+            var primaryEmail;
+            for (var i=0; i < resp.emails.length; i++) {
+              if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
+            }
+            document.getElementById('guest_name_div').innerHTML = resp.name.givenName;
+            // document.getElementById('responseContainer').value = 'Primary email: ' +
+            //     primaryEmail + '\n\nFull Response:\n' + JSON.stringify(resp); //
+
+            var csrf_token = "{% csrf_token %}";    
+            gplus_login(resp,csrf_token);          
+          }
+
+
+
+          // $('#post-form').on('submit', function(event){
+          //       event.preventDefault();
+          //       console.log("form submitted!")  // sanity check
+          //       gplus_login();  // aka create_post()
+          //   });
+
+    </script>
     
+
   </head>
 
   <!DOCTYPE HTML>
@@ -69,10 +128,10 @@
         {% if user.is_authenticated %}
             <h1><font color="#c9731f">Welcome, {{ user.first_name }}.</font></h1>
             Your last login was: {{ user.last_login}}
-            <a href="/core/logout/">Logout</a>
+            <a href="{% url 'user_logout' %}">Logout</a>
         {%elif  display_type == "Login" %}
         {% else %}
-            <h1><font color="#c9731f">Welcome, Guest!</font></h1>
+            <h1><font color="#c9731f">Welcome, <div id="guest_name_div">Guest.</div></font></h1>
             <p>Please ..
                 <a href="/core/register/" id="id_register">|Register|</a> or 
                 <a href="/core/login/" id="id_login">|Login|</a>
@@ -111,6 +170,49 @@
       </ul>
     </div>
     <!-- End Menu -->
+<!-- 
+<span id="signinButton">
+  <span
+    class="g-signin"
+    data-callback="signinCallback"
+    data-clientid="848008928839-6n84i8e3sqttq539fpi2sjaqmlb3pdj2.apps.googleusercontent.com"
+    data-cookiepolicy="single_host_origin"
+    data-requestvisibleactions="http://schema.org/AddAction"
+    data-scope="https://www.googleapis.com/auth/plus.login">
+  </span>
+</span> -->
+{% if user.is_authenticated %}
+<span id="signinButton" style="display: none;">
+{% else %}
+<span id="signinButton">
+{% endif %}
+  <span
+    class="g-signin"
+    data-callback="signinCallback"
+    data-clientid="848008928839-6n84i8e3sqttq539fpi2sjaqmlb3pdj2.apps.googleusercontent.com"
+    data-cookiepolicy="single_host_origin"
+    data-scope="https://www.googleapis.com/auth/userinfo.email">
+  </span>
+</span>
+
+
+ <!-- Container with the Sign-In button. -->
+    <div id="gConnect" class="button" style="display: none;">
+      <button class="g-signin"
+          data-scope="email"
+          data-clientid="848008928839-6n84i8e3sqttq539fpi2sjaqmlb3pdj2.apps.googleusercontent.com"
+          data-callback="onSignInCallback"
+          data-theme="dark"
+          data-cookiepolicy="single_host_origin">
+      </button>
+    </div>
+
+      <!-- Textarea for outputting data -->
+<!-- <div id="response" class="hide">
+        <textarea id="responseContainer" style="width:100%; height:150px"></textarea>
+      </div> -->
+
+
     </div>
     <!-- End Sidebar -->
 
@@ -153,7 +255,7 @@
         </nav>
     <!-- End Nav bar top-menu   -->
 
-    <!-- Begin Content -->
+    <!-- Begin Content # -->
         <div id="content">
             
             
@@ -161,7 +263,7 @@
                 
             {%elif  display_type == "Login" %}
             {% else %}
-                
+                User is not logged in...
             {% endif %}
 
 

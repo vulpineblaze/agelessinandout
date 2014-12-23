@@ -26,8 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
 
-# Application definition
+# Application definition #
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -36,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inandout'
+    'django.contrib.sites',
+    'inandout',
 )
 
 MIDDLEWARE_CLASSES = (

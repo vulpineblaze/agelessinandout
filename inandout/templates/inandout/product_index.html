@@ -20,7 +20,9 @@
 {% if product_list %}
     <ul>
     {% for product in product_list %}
-        <li><a href="../product_detail/{{ product.id }}/">{{ product.short_name }}</a></li>
+    	{% if product.is_active %}
+        	<li><a href="../product_detail/{{ product.id }}/">{{ product.short_name }}</a></li>
+    	{% endif %}
     {% endfor %}
     </ul>
 {% else %}

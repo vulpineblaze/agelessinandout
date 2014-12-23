@@ -1,5 +1,5 @@
 #forms.py
-# from django import forms
+from django import forms
 # from django.core.exceptions import ValidationError
 # from django.forms.models import inlineformset_factory
 # from django.contrib.admin import widgets   
@@ -7,7 +7,73 @@
 
 # from django.contrib.auth.models import User
 
-# from core.models import *
+from inandout.models import *
+
+
+
+
+
+class UserForm(forms.ModelForm):
+    """ 
+    Creates a Form for the User/UserProfile model 
+    Also has required confirm fields with supporting clean/error methods
+    """
+
+    confirm_email = forms.EmailField(
+        label="Confirm Email",
+        required=True,
+    )
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(),
+        label="Confirm Password",
+        required=True,
+    )
+    
+    class Meta:
+        """ Overrides Meta property to user User model and defines and orders fields  """
+        model = User
+        fields = ('username','first_name' ,'last_name', 'email', 'confirm_email', 'password', 'confirm_password' )
+        
+    def __init__(self, *args, **kwargs):
+
+        if kwargs.get('instance'):
+            email = kwargs['instance'].email
+            kwargs.setdefault('initial', {})['confirm_email'] = email
+            password = kwargs['instance'].password
+            kwargs.setdefault('initial', {})['confirm_password'] = password
+
+        return super(UserForm, self).__init__(*args, **kwargs)
+    
+    def clean(self):
+        """ Overrides cleam method to support confirm fields """
+        valid_text = ""
+        if (self.cleaned_data.get('email') !=
+            self.cleaned_data.get('confirm_email')):
+            self._errors['email'] = "Email addresses must match."
+            self._errors['confirm_email'] = "Email addresses must match."
+            valid_text += " Email addresses must match. "
+        if (self.cleaned_data.get('password') !=
+            self.cleaned_data.get('confirm_password')):
+            self._errors['password'] = "Passwords must match."
+            self._errors['confirm_password'] = "Passwords must match."
+            valid_text += " Passwords must match. "
+        if valid_text != "":
+            raise ValidationError(valid_text)
+        return self.cleaned_data
+
+        
+
+# class PostForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+        # exclude = ['author', 'updated', 'created', ]
+        # fields = ['text']
+        # widgets = {
+        #     'text': forms.TextInput(
+        #         attrs={'id': 'post-text', 'required': True, 'placeholder': 'Say something...'}
+        #     ),
+        # }
 
  
 # class SubNodeForm(forms.ModelForm):

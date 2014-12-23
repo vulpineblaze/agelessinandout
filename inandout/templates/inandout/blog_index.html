@@ -20,7 +20,9 @@
 {% if blog_list %}
     <ul>
     {% for blog in blog_list %}
-        <li><a href="../blog_detail/{{ blog.id }}/">{{ blog.title }}</a></li>
+    	{% if blog.is_active %}
+        	<li><a href="../blog_detail/{{ blog.id }}/">{{ blog.title }}</a></li>
+    	{% endif %}
     {% endfor %}
     </ul>
 {% else %}
