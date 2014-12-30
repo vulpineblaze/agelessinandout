@@ -17,6 +17,29 @@
 
 
 	</p>
+	
+	{% for object in object_list %}
+
+    <div class="front-page-object" id="object-{{ object.priority }}-{{ object.k }}"
+      style="width:{{ object.width }};">
+    
+
+      {% for image in object.images.all%}
+        <img class="front-page-object-image" src="{% static image.image.url %}"/>
+      {% endfor %}
+
+      {% for text in object.texts.all%}
+        {{ text.text }}
+      {% endfor %}
+    </div>
+
+  {% endfor %}
+    
+    <div class="clear"></div>
+    
+    <div class="line"></div>
+
+    
 	<!-- node desc is: {{ node.desc }}</p>
 	<p>Node has: 
 	<BR>

@@ -116,7 +116,7 @@ a {
 }
 
 a:hover {
-    color: #ab4d63;
+    color: {{ basepage.link_hover_color }};
 }
 
 a.more {
@@ -391,21 +391,21 @@ pre {
 
 #wrapper {
     /*background-color: #FFFFFF;*/
-    width: 990px;
+    width: 920px;
     margin: 0 auto;
     overflow: hidden;
-    border-right: 1px solid rgba(0, 0, 0, 0.50);
-    min-height:100%;
+/*    border-right: 1px solid rgba(0, 0, 0, 0.50);
+*/    min-height:100%;
 }
 
 #content {
-    width: 700px;
+    width: 900px;
     float: left;
     padding: 20px 5px 20px 10px;
         /*
         position: fixed;
 
-    margin-top: -1px;
+    margin-top: -1px; //
     z-index: 100;*/
 }
 
@@ -1557,10 +1557,10 @@ nav ul {
 }
 .nav > li:hover, 
 .nav > li:hover > a { 
-  border-bottom-color: orange;
+  border-bottom-color: {{ basepage.link_hover_color }};
 }
 .nav li:hover > a { 
-  color:orange; 
+  color:{{ basepage.link_hover_color }}; 
 }
 .nav > li:first-child { 
   border-radius: 4px 0 0 4px;
@@ -1614,7 +1614,7 @@ nav ul {
 }
 .nav > li:hover > a:first-child:nth-last-child(2):before {
   border: 5px solid transparent; 
-  border-bottom-color: orange; 
+  border-bottom-color: {{ basepage.link_hover_color }}; 
   margin-top:-5px
 }
 .nav li li > a:first-child:nth-last-child(2):before {  
@@ -1623,7 +1623,7 @@ nav ul {
 }
 .nav li li:hover > a:first-child:nth-last-child(2):before {
   border: 5px solid transparent; 
-  border-right-color: orange;
+  border-right-color: {{ basepage.link_hover_color }};
   right: 10px; 
 }
 /* ## ## */

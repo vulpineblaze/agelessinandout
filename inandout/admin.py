@@ -26,6 +26,21 @@ admin.site.register(Product, ProductAdmin)
 
 
 
+# class ProductForm(forms.ModelForm):
+#     """ """
+#     class Meta:
+#         model = Product
+#         widgets = {
+#             'long_text':forms.Textarea
+#         }
+
+# class ProductAdmin(admin.ModelAdmin):
+#     form = ProductForm
+
+admin.site.register(Brand)
+
+
+
 class BlogForm(forms.ModelForm):
     """ """
     class Meta:
@@ -102,6 +117,33 @@ class BasePageAdmin(admin.ModelAdmin):
 admin.site.register(BasePage, BasePageAdmin)
 
 
+
+
+
+
+class PageObjectTextForm(forms.ModelForm):
+    """ """
+    class Meta:
+        model = PageObjectText
+        widgets = {
+            'text':forms.Textarea
+        }
+
+class PageObjectTextInline(admin.StackedInline):
+    model = PageObjectText
+    extra = 1
+    form = PageObjectTextForm
+
+
+class PageObjectImageInline(admin.StackedInline):
+    model = PageObjectImage
+    extra = 1
+
+class PageObjectAdmin(admin.ModelAdmin):
+    list_display = ('title','is_active','priority','width')
+    inlines = [PageObjectTextInline,PageObjectImageInline]
+
+admin.site.register(PageObject, PageObjectAdmin)
 
 # # ####  Example to disable "Add" button
 # # admin.py

@@ -30,4 +30,21 @@
 {% endif %}
 
 
+{% if product_list %}
+    {% for product in product_list %}
+    	{% if product.is_active %}
+    		<div class="product-list-object" id="product-object-{{product.brand}}-{{product.id}}">
+    			<a href="../product_detail/{{ product.id }}/">
+    			<img class="front-page-object-image" src="{% static product.main_image.url %}"/>
+    				<h1 style="text-align: center;">{{ product.short_name }}</h1>
+    			</a>
+    		</div>
+        	
+    	{% endif %}
+    {% endfor %}
+{% else %}
+    <p>No nodes are available.</p>
+{% endif %}
+
+
 {%endblock%}

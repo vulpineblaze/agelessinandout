@@ -1,6 +1,8 @@
 import pickle
 import base64
 
+import datetime as datetime
+
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
@@ -27,6 +29,10 @@ admin.site.register(CredentialsModel, CredentialsAdmin)
 
 class Product(models.Model):
     """ """
+    brand = models.ForeignKey('Brand',
+                                verbose_name="Which Brand does this belong to?",
+                                related_name='brand',
+                                blank=True, null=True)
     is_active = models.BooleanField("If unchecked, Product will not display on website",
                             default=False)
     short_name = models.CharField("Short field used on Product List page",
@@ -43,6 +49,15 @@ class Product(models.Model):
                             default="")
     def __unicode__(self):              # __unicode__ on Python 2
         return self.short_name
+
+class Brand(models.Model):
+    """ """
+    is_active = models.BooleanField("If unchecked, Brand will not display on website",
+                            default=False)
+    short_name = models.CharField("Brand Name",
+                            max_length=80)    
+    def __unicode__(self):              # __unicode__ on Python 2
+        return self.short_name    
 
 class Blog(models.Model):
     """ """
@@ -86,13 +101,69 @@ class FrontPage(models.Model):
 
 class BasePage(models.Model):   
     """ """
+    disclaimer_text = models.CharField("Disclaimer Text to show on all pages.",
+                                    max_length=2000,
+                                    default='default disclaimer text.')
     background_image = models.CharField("Background Image for entire website",
                                     max_length=200,
                                     default='inandout/images/background_1920x1084.png')
+    link_hover_color = models.CharField("Link Hover Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='orange')
     def __unicode__(self):              # __unicode__ on Python 2
         return "Base Page (aka Whole Site) Content" 
     class Meta:
-        verbose_name_plural = "BasePage"  
+        verbose_name_plural = "BasePage"  ###
+
+
+
+
+class PageObject(models.Model):   
+    """ """
+    is_active = models.BooleanField("If unchecked, Object will not display on website",
+                            default=False)
+    PAGE_CHOICES = (
+        ('FP', 'Front Page (Home)'),
+        ('AU', 'About Us'),
+        ('CT', 'Contact'),
+    )
+    page = models.CharField("Which Page should this object display on?",
+                                max_length=2, 
+                                choices=PAGE_CHOICES,
+                                default='FP')
+    title = models.CharField("Title to appear on admin page.",
+                                    max_length=80,
+                                    default="delete this to add title.")
+    priority = models.IntegerField("Higher numbers show higher on the page.",
+                                    default=0)
+    created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    width = models.IntegerField("420 for half page, 270 for thirds, 880 for full. Be sure that complementary objects exist to prevent issues!",
+                                    default=420)
+    def __unicode__(self):              # __unicode__ on Python 2
+        return "Page Object" 
+
+class PageObjectText(models.Model):   
+    """ """
+    parent = models.ForeignKey('PageObject',
+                                verbose_name="Which PageObject does this belong to?",
+                                related_name='texts')
+    text = models.CharField("Text to appear in this object.",
+                                    max_length=400,
+                                    default="delete this to add text.")
+    def __unicode__(self):              # __unicode__ on Python 2
+        return "Page Object Text" 
+
+class PageObjectImage(models.Model):   
+    """ """
+    parent = models.ForeignKey('PageObject',
+                                verbose_name="Which PageObject does this belong to?",
+                                related_name='images')
+    image = models.ImageField("Image to appear in this object.")
+    def __unicode__(self):              # __unicode__ on Python 2
+        return "Page Object Image" 
+
+    # class Meta:
+    #     verbose_name_plural = "FrontPage"        
 
 # class Question(models.Model):
 #     question_text = models.CharField(max_length=200)

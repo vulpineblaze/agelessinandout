@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 
     url(r'^product_index/$', views.product_index, name='product_index'), # ADD NEW PATTERN!
 
+    url(r'^brand_list/(?P<brand_id>\d+)/$', views.brand_list, name='brand_list'),
     url(r'^product_detail/(?P<product_id>\d+)/$', views.product_detail, name='product_detail'),
 
     url(r'^blog_index/$', views.blog_index, name='blog_index'), # ADD NEW PATTERN!

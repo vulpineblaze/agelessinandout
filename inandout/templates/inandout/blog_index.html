@@ -30,4 +30,21 @@
 {% endif %}
 
 
+{% if blog_list %}
+    {% for blog in blog_list %}
+    	{% if blog.is_active %}
+    		<div class="blog-list-object" id="blog-object-{{blog.id}}">
+    			<a href="../blog_detail/{{ blog.id }}/">
+    			<img class="blog-list-object-image" src="{% static blog.main_image.url %}"/>
+    				<h1>{{ blog.title }}</h1>
+    				<h3>{{ blog.preview_text }}</h3>
+    			</a>
+    		</div>
+        	
+    	{% endif %}
+    {% endfor %}
+{% else %}
+    <p>No nodes are available.</p>
+{% endif %}
+
 {%endblock%}

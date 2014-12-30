@@ -16,53 +16,34 @@
 
   <!-- Begin Content -->
   
-  <h1 class="title">Welcome</h1>
-  <div class="line"></div>
-    <a style="display:block" href="/product/">
-      <div class="one-half">
-      <center><h3><img src="/static/inandout/images/filler_300x225.png" alt="TICKETS" /></h3></center>
-      </div>
-    </a>
-    
-    <a style="display:block" href="/product/">
-      <div class="one-half last">
-      <center><h3><img src="/static/inandout/images/filler_300x225.png" alt="CUSTOMERS" /></h3></center>
-      </div>
-    </a>
     
     <P>
       Below is dynamically added code/text via the CMS engine.
       {{ frontpage.main_text|safe }}
     </P>
 
-    <P>
-      This is a long awesome block of text that is hard coded into home.html<BR>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel gravida sapien. Sed eget malesuada risus. In sed nulla nulla. Vivamus a nisi leo. Integer nulla nisl, viverra et est lobortis, congue semper velit. Curabitur suscipit, nisi in pharetra tincidunt, ipsum odio pulvinar nibh, id viverra purus erat a lacus. Quisque hendrerit, sapien in bibendum tristique, nunc risus molestie sem, vitae consectetur nisl purus in purus. Maecenas est libero, finibus nec placerat finibus, feugiat nec ex. Duis in justo imperdiet, cursus lacus eget, vehicula turpis. Praesent facilisis tristique elementum. Vestibulum finibus id velit vel eleifend. Aliquam sit amet risus quam.<BR>
-
-      Aenean aliquam, odio id ultricies maximus, magna nunc iaculis neque, non congue est augue ac diam. Morbi lacinia posuere dolor, vitae pharetra mi pharetra quis. Nulla eu enim eget metus semper elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus facilisis est ac orci euismod mattis. Nam tempus sapien id congue interdum. Donec dapibus nunc eu purus hendrerit, at sagittis lectus fringilla. Mauris a magna mattis, feugiat justo in, vulputate magna. Pellentesque faucibus erat ante, vel tempus nisi pellentesque sit amet. Proin sit amet blandit odio, id eleifend nibh. Nulla iaculis dui sagittis feugiat hendrerit. Morbi consequat ullamcorper libero a consequat. Cras posuere at felis eu facilisis.<BR>
-
-      Aenean at mauris vel turpis lobortis fermentum. Nulla scelerisque sagittis nulla, in cursus nulla efficitur ac. Vestibulum pharetra, eros in malesuada elementum, justo mi mollis ligula, nec egestas diam mi in neque. Mauris vitae nunc at nunc feugiat tincidunt nec non risus. Praesent tristique suscipit felis, sed convallis nunc sagittis in. Ut laoreet arcu mattis, suscipit nunc sit amet, mollis sem. Praesent feugiat tortor at libero tempus, in pellentesque massa malesuada. Nunc ornare mattis pharetra. In hac habitasse platea dictumst. Nunc quis consequat ligula. Praesent fringilla nulla mauris, sed interdum leo hendrerit sed. Ut id nisi venenatis, semper magna nec, semper leo. Fusce condimentum congue ipsum vitae cursus. Vivamus pellentesque, neque eu hendrerit luctus, nunc magna sagittis leo, ut viverra sapien felis sed ligula. Aliquam volutpat, sem et dictum pharetra, lectus lorem pulvinar tellus, at hendrerit ipsum nunc et diam. In tincidunt lectus ultrices erat sodales dapibus.<BR>
-
-      Nulla auctor, mi at viverra congue, enim ligula volutpat odio, sit amet posuere tortor ante a sem. Ut efficitur sollicitudin magna non euismod. Etiam convallis a lacus eget scelerisque. Nam ornare, urna in faucibus ornare, lorem nulla dignissim libero, sit amet sagittis massa tortor et metus. Nullam sollicitudin tortor non nunc rutrum lobortis. Praesent convallis, sem dapibus facilisis tristique, dui augue mattis magna, sit amet maximus lorem lectus quis justo. Donec id felis commodo augue congue aliquet dapibus non mi. Ut pulvinar enim eu nibh tempus, in laoreet dolor congue. Maecenas condimentum ultrices enim, ac aliquet mi tristique ac.<BR>
-
-      Integer sollicitudin malesuada imperdiet. Pellentesque felis turpis, tempor nec tortor in, malesuada ullamcorper velit. Donec tempor turpis sem, eu posuere velit blandit a. Morbi malesuada nisl risus, vel elementum justo aliquet nec. Suspendisse imperdiet urna sed massa malesuada imperdiet. Donec in.<BR>
-
-    </P>
-
     <div class="clear"></div>
     
-    <a style="display:block" href="/product/">
-      <div class="one-half">
-      <center><h3><img src="/static/inandout/images/filler_300x225.png" alt="FINANCE" /></h3></center>
-      </div>
-    </a>
+
+
+
+
+  {% for object in object_list %}
+
+    <div class="front-page-object" id="object-{{ object.priority }}-{{ object.k }}"
+      style="width:{{ object.width }};">
     
-    <a style="display:block" href="/product/">
-      <div class="one-half last">
-      <center><h3><img src="/static/inandout/images/filler_300x225.png" /></h3></center>
-      </div>
-    </a>
+
+      {% for image in object.images.all%}
+        <img class="front-page-object-image" src="{% static image.image.url %}"/>
+      {% endfor %}
+
+      {% for text in object.texts.all%}
+        {{ text.text }}
+      {% endfor %}
+    </div>
+
+  {% endfor %}
     
     <div class="clear"></div>
     
