@@ -1,0 +1,29 @@
+
+
+{% load static %}
+{% load staticfiles%}
+
+
+<div class="front-page-object" id="object-{{ object.priority }}-{{ object.pk }}"
+  style="width:{{ object.width }};">
+
+
+  {% for image in object.images.all%}
+    <img class="front-page-object-image" src="{% static image.image.url %}"/>
+  {% endfor %}
+
+  {% for text in object.texts.all%}
+    {{ text.text|linebreaks }}
+  {% endfor %}
+
+  {% for link in object.links.all%}
+  	{% if link.is_youtube %}
+  		<embed width="{{ object.width }}" height="auto"
+			src="{{ link.embed }}?autoplay=true">
+  	{% else %}
+    	<a href="{{ link.link }}">{{ link.link }}</a>
+  	{% endif %}
+  {% endfor %}
+
+
+</div>

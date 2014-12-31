@@ -12,9 +12,9 @@
 		The product is_active: {{ product.is_active }}<BR>
 		The product brand: {{ product.brand }}<BR>
 		The product short_name: {{ product.short_name }}<BR>
-		The product long_name: {{ product.long_name }}<BR>
+		The product long_name: {{ product.long_name|linebreaks }}<BR>
 		The product main_image: <img src="{% static product.main_image.url %}"/><BR>
-		The product long_text: {{ product.long_text }}<BR>
+		The product long_text: {{ product.long_text|linebreaks }}<BR>
 		The product amazon_link: <a href="{{ product.amazon_link }}">
 			Click Here!</a><BR>
 

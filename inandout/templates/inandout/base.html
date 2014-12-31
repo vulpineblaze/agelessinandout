@@ -8,13 +8,55 @@
 <meta charset="UTF-8">
 
     <Title>
-        CMS Test
+        {{ basepage.site_title }}
     </title>
   <head>
   <!-- ###
     <script type="text/javascript" src="/static/inandout/js/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="/static/inandout/js/jquery.tablesorter.js"></script>
       -->
+
+<meta property="og:title"
+content="{{ basepage.site_title }}" />
+<meta property="og:site_name" content="{{ basepage.site_name }}"/>
+<meta property="og:url"
+content="http://{{request.get_host}}{{request.get_full_path}}" />
+<meta property="og:description" content="
+    {% if product %}
+        {{product.long_text}}
+    {% elif product_list %}
+        {% with product=product_list|first %}
+            {{product.long_text}}
+        {% endwith %}
+    {% elif blog %}
+        {{blog.preview_text}}
+    {% elif blog_list %}
+        {% with blog=blog_list|first %}
+            {{blog.preview_text}}
+        {% endwith %}
+    {% elif testamonial %}
+        {{testamonial.text}}
+    {% elif testamonial_list %}
+        {% with testamonial=testamonial_list|first %}
+            {{testamonial.text}}
+        {% endwith %}
+    {% else  %}
+        {{basepage.site_desc}}
+    {% endif %}
+" />
+<meta property="fb:app_id" content="{{basepage.fb_app_id}}" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />    
+<meta property="article:author" content="
+    {% if blog %}
+        {{blog.fb_author_link}}
+    {% else  %}
+        {{basepage.fb_page_link}}
+    {% endif %}
+" />
+<meta property="article:publisher" content="{{basepage.fb_page_link}}" />
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="/static/inandout/js/ddsmoothmenu.js"></script>
@@ -145,7 +187,7 @@ html, body {
 
 body {
     background-color: #bbd2db;
-    background-image: url("{% static basepage.background_image %}");
+    background-image: url("{% static basepage.background_image.url %}");
 
     font-family:Arial, sans-serif;
     font-size: 13px;
@@ -1679,9 +1721,9 @@ nav ul {
 
 /*****************  Custom Object CSS *********************/
 #disclaimer-text{
-  background: #555;
+  background: {{ basepage.disclaimer_background_color }};
   font: 8px "Times New Roman", sans-serif;
-  color: #fff;
+  color: {{ basepage.disclaimer_text_color }} ;
 }
 .front-page-object{
   float:left;
@@ -1708,6 +1750,44 @@ nav ul {
   width: 100% !important;
   height: auto !important;
 }
+.product-list-cool-object{
+  float:left;
+  margin: 15px 5px 5px 5px; /*top right bottom left*/
+  padding: 15px 5px 5px 5px; /*top right bottom left*/
+  border-radius: 10px 10px 10px 10px;
+  /*border: 5px solid green; */
+  width:270;
+  /*background: green;  */
+  display: block;
+  position: relative;
+  /*background-image: url("{% static 'inandout/images/test_img.png' %}"); // */
+}
+.product-list-cool-object:after{
+  content:  "";
+  background-image: url("{% static 'inandout/images/test_img2.png' %}");
+  background-color: green;
+  background-position: right bottom; 
+  background-repeat: no-repeat; 
+  border-radius: 20px 20px 20px 20px;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+.product-list-cool-object-image{
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+.product-list-cool-object-text{
+  text-shadow: 1px 1px 15px #fff;
+  color: green;
+  font-size:20px;
+  text-align: center;
+}
 .blog-list-object{
   float:left;
   margin: 15px 5px 5px 5px; /*top right bottom left*/
@@ -1718,12 +1798,20 @@ nav ul {
 }
 .blog-list-object-image{
   display: block;
-  float:right;
+  float:left;
   width: 200px !important;
   height: auto !important;
 }
+.testamonial-list-object{
+  float:left;
+  margin: 15px 5px 5px 5px; /*top right bottom left*/
+  padding: 15px 5px 5px 5px; /*top right bottom left*/
+  border-radius: 4px 0 0 4px;
+  border: 5px solid #fff; 
+  width:270;
+}
 
-/* ## ## */
+/* ## ## ## */
     </style>
 
 
@@ -1782,7 +1870,7 @@ nav ul {
           //       event.preventDefault();
           //       console.log("form submitted!")  // sanity check
           //       gplus_login();  // aka create_post()
-          //   });
+          //   }); //
 
     </script>
     
@@ -1804,7 +1892,7 @@ nav ul {
 
 
             
-                <center><h3><img src="/static/inandout/images/logo_700x180.png" alt="Login Using Sidebar" /></h3></center>
+                <center><h3><img src="{% static basepage.banner_image.url %}" alt="Login Using Menu" /></h3></center>
 
 
 

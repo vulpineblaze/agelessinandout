@@ -16,7 +16,7 @@
 
 
 
-
+<!-- 
 {% if blog_list %}
     <ul>
     {% for blog in blog_list %}
@@ -27,7 +27,7 @@
     </ul>
 {% else %}
     <p>No blog are available.</p>
-{% endif %}
+{% endif %} -->
 
 
 {% if blog_list %}
@@ -35,9 +35,9 @@
     	{% if blog.is_active %}
     		<div class="blog-list-object" id="blog-object-{{blog.id}}">
     			<a href="../blog_detail/{{ blog.id }}/">
-    			<img class="blog-list-object-image" src="{% static blog.main_image.url %}"/>
-    				<h1>{{ blog.title }}</h1>
-    				<h3>{{ blog.preview_text }}</h3>
+    			<img class="blog-list-object-image" src="{% static blog.preview_image.url %}"/>
+    				<h1>{{ blog.title }} - <div style="font-size:10px; float:right;">{{ blog.created }}</div></h1>
+    				<h3>{{ blog.preview_text|linebreaks }}</h3>
     			</a>
     		</div>
         	
@@ -48,3 +48,5 @@
 {% endif %}
 
 {%endblock%}
+
+<!-- ### -->

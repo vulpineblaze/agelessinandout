@@ -17,6 +17,8 @@
 
 
 
+
+<!-- 
 {% if product_list %}
     <ul>
     {% for product in product_list %}
@@ -28,7 +30,7 @@
 {% else %}
     <p>No nodes are available.</p>
 {% endif %}
-
+ -->
 
 {% if product_list %}
     {% for product in product_list %}
@@ -41,6 +43,46 @@
     		</div>
         	
     	{% endif %}
+    {% endfor %}
+{% else %}
+    <p>No nodes are available.</p>
+{% endif %}
+
+
+
+    <div class="clear"></div>
+    
+    <div class="line"></div>
+
+
+
+
+{% if product_list %}
+    {% for product in product_list %}
+        {% if product.is_active %}
+            <style type="text/css">
+                #product-cool-object-{{product.id}}:after{
+                  background-image: url('{% static product.background_image.url %}');
+                  background-color: {{product.background_and_text_color}};
+                 }
+
+                #product-list-cool-object-text-{{product.id}}{
+                  color: {{product.background_and_text_color}};
+                }
+            </style>
+            <div class="product-list-cool-object" 
+                id="product-cool-object-{{product.id}}">
+                <a href="../product_detail/{{ product.id }}/">
+                <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
+                    <P class="product-list-cool-object-text"
+                        id="product-list-cool-object-text-{{product.id}}">
+                        {{ product.short_name }}
+                    </P>
+                </a>
+            </div>
+            
+            
+        {% endif %}
     {% endfor %}
 {% else %}
     <p>No nodes are available.</p>

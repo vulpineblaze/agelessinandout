@@ -1,6 +1,6 @@
 from django.shortcuts import render , get_object_or_404, render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext, loader
+from django.template import *
 
 from inandout.models import *
 
@@ -65,7 +65,7 @@ def product_index(request):
 
     basepage =  BasePage.objects.order_by('?')[0]
     brand_list = Brand.objects.all()
-    product_list = Product.objects.all()
+    product_list = Product.objects.order_by('-created')
 
     context = {'product_list': product_list,'basepage':basepage,'brand_list':brand_list}
     return render(request, 'inandout/product_index.html', context)
@@ -82,7 +82,9 @@ def blog_index(request):
     blog_list = Blog.objects.all()
 
     context = {'blog_list': blog_list,'basepage':basepage,'brand_list':brand_list}
-    return render(request, 'inandout/blog_index.html', context)
+    return render(request, 
+                'inandout/blog_index.html', 
+                context)
 
 
 

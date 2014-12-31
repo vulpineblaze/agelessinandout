@@ -81,11 +81,14 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
+# https://docs.djangoproject.com/en/1.7/howto/static-files/ ####
 
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+TEMPLATE_CONTEXT_PROCESSORS = ( 'django.contrib.auth.context_processors.auth',
+                                'django.core.context_processors.request', )
 
 MEDIA_ROOT = '/home/ubuntu/django_projs/ageless/media/'
 MEDIA_URL = '/media/'

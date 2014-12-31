@@ -20,7 +20,7 @@ class CredentialsAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(CredentialsModel, CredentialsAdmin)
+# admin.site.register(CredentialsModel, CredentialsAdmin)
 
 
 
@@ -30,23 +30,30 @@ admin.site.register(CredentialsModel, CredentialsAdmin)
 class Product(models.Model):
     """ """
     brand = models.ForeignKey('Brand',
-                                verbose_name="Which Brand does this belong to?",
-                                related_name='brand',
-                                blank=True, null=True)
+                            verbose_name="Which Brand does this belong to?",
+                            related_name='brand',
+                            blank=True, null=True)
     is_active = models.BooleanField("If unchecked, Product will not display on website",
                             default=False)
+    created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     short_name = models.CharField("Short field used on Product List page",
                             max_length=80)
     long_name = models.CharField("Longer name used in Product detail apge",
                             max_length=200)
-    main_image = models.ImageField("Image for the product. Should be as 'square' as possible",
-                            upload_to = 'product_folder/', 
-                            default = 'product_folder/None/no-img.jpg')
     long_text = models.CharField("A long description of the product, paragraphs OK",
                             max_length=2000)
     amazon_link = models.URLField("Amazon link to the Products purchase page",
                             max_length=300,
                             default="")
+    main_image = models.ImageField("Image for the product. Should be as 'square' as possible",
+                            upload_to = 'product_folder/', 
+                            default = 'None/no-img.png')
+    background_image = models.ImageField("Background image fr product display.",
+                            upload_to = 'product_folder/', 
+                            default = 'None/no-back-img.png')
+    background_and_text_color = models.CharField("Background and Text Color. Use HTML acceptable names or Hex Code.",
+                            max_length=20,
+                            default='green')
     def __unicode__(self):              # __unicode__ on Python 2
         return self.short_name
 
@@ -63,14 +70,22 @@ class Blog(models.Model):
     """ """
     is_active = models.BooleanField("If unchecked, Blog will not display on website",
                             default=False)
+    created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     title = models.CharField("Blog's title",
                             max_length=80)
     preview_text = models.CharField("Short preview shown in Blog list page",
                             max_length=160)
-    main_image = models.ImageField("Image for the blog. Should be a wide rectangle, if possible"
-                            )
     long_text = models.CharField("The main text of the Blog",
                             max_length=4000)
+    fb_author_link = models.CharField("Facebook API - Link to Author's Facebook Page.",
+                                    max_length=200,
+                                    default='')
+    main_image = models.ImageField("Image for the blog. Should be a wide rectangle, if possible",
+                            upload_to = 'blog_folder/', 
+                            default = 'None/no-img.png')
+    preview_image = models.ImageField("Preview Image shown on the Index page.",
+                            upload_to = 'blog_folder/', 
+                            default = 'None/no-img.png')
     def __unicode__(self):              # __unicode__ on Python 2
         return self.title
 
@@ -78,6 +93,7 @@ class Testamonial(models.Model):
     """ """
     is_active = models.BooleanField("If unchecked, Testamonial will not display on website",
                             default=False)
+    created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     email_address = models.EmailField("Email address of submitter",
                             blank=True)
     text = models.CharField("Testamonial text",
@@ -86,6 +102,15 @@ class Testamonial(models.Model):
                             max_length=80)
     def __unicode__(self):              # __unicode__ on Python 2
         return self.nickname
+
+
+
+
+
+
+
+
+
 
 
 
@@ -101,19 +126,48 @@ class FrontPage(models.Model):
 
 class BasePage(models.Model):   
     """ """
+    site_title = models.CharField("Title to be shown on Browser.",
+                                    max_length=80,
+                                    default='default CMS title.')
     disclaimer_text = models.CharField("Disclaimer Text to show on all pages.",
                                     max_length=2000,
                                     default='default disclaimer text.')
-    background_image = models.CharField("Background Image for entire website",
-                                    max_length=200,
-                                    default='inandout/images/background_1920x1084.png')
+    disclaimer_background_color = models.CharField("Disclaimer Background Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=20,
+                                    default='#555')
+    disclaimer_text_color = models.CharField("Disclaimer Text Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=20,
+                                    default='#ccc')
+    background_image = models.ImageField("Image for the Background.",
+                            upload_to = 'basepage_folder/', 
+                            default = 'None/no-img.png')
+    banner_image = models.ImageField("Top of page Banner Image.",
+                            upload_to = 'basepage_folder/', 
+                            default = 'None/no-img.png')
     link_hover_color = models.CharField("Link Hover Color. Use HTML acceptable names or Hex Code.",
                                     max_length=60,
                                     default='orange')
+    site_name = models.CharField("Facebook API - site name.",
+                                    max_length=80,
+                                    default='')
+    site_desc = models.CharField("Facebook API - site description default value.",
+                                    max_length=200,
+                                    default='')
+    fb_app_id = models.CharField("Facebook API - App ID.",
+                                    max_length=200,
+                                    default='')
+    fb_page_link = models.CharField("Facebook API - Link to company Facebook Page.",
+                                    max_length=200,
+                                    default='')
     def __unicode__(self):              # __unicode__ on Python 2
         return "Base Page (aka Whole Site) Content" 
     class Meta:
         verbose_name_plural = "BasePage"  ###
+
+
+
+
+
 
 
 
@@ -161,6 +215,21 @@ class PageObjectImage(models.Model):
     image = models.ImageField("Image to appear in this object.")
     def __unicode__(self):              # __unicode__ on Python 2
         return "Page Object Image" 
+
+class PageObjectLink(models.Model):   
+    """ """
+    parent = models.ForeignKey('PageObject',
+                                verbose_name="Which PageObject does this belong to?",
+                                related_name='links')
+    is_youtube = models.BooleanField("Check this if link is a youtube video!",
+                            default=False)
+    link = models.URLField("Link to appear in this object.",
+                            max_length=300,
+                            default="")
+    def __unicode__(self):              # __unicode__ on Python 2
+        return "Page Object Image"  
+    def embed(self):
+        return self.link.replace('watch?v=','embed/')       
 
     # class Meta:
     #     verbose_name_plural = "FrontPage"        

@@ -21,6 +21,7 @@ class ProductForm(forms.ModelForm):
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
+    list_display = ('short_name','is_active','brand','background_and_text_color')
 
 admin.site.register(Product, ProductAdmin)
 
@@ -51,6 +52,7 @@ class BlogForm(forms.ModelForm):
 
 class BlogAdmin(admin.ModelAdmin):
     form = BlogForm
+    list_display = ('title','is_active')
 
 admin.site.register(Blog, BlogAdmin)
 
@@ -66,6 +68,7 @@ class TestamonialForm(forms.ModelForm):
 
 class TestamonialAdmin(admin.ModelAdmin):
     form = TestamonialForm
+    list_display = ('nickname','is_active')
 
 admin.site.register(Testamonial, TestamonialAdmin)
 
@@ -139,9 +142,15 @@ class PageObjectImageInline(admin.StackedInline):
     model = PageObjectImage
     extra = 1
 
+class PageObjectLinkInline(admin.StackedInline):
+    model = PageObjectLink
+    extra = 1
+
 class PageObjectAdmin(admin.ModelAdmin):
     list_display = ('title','is_active','priority','width')
-    inlines = [PageObjectTextInline,PageObjectImageInline]
+    inlines = [PageObjectTextInline,
+                PageObjectLinkInline,
+                PageObjectImageInline]
 
 admin.site.register(PageObject, PageObjectAdmin)
 

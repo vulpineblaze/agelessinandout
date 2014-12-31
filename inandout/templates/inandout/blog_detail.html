@@ -11,9 +11,11 @@
 	<p>
 		The blog is_active: {{ blog.is_active }}<BR>
 		The blog title: {{ blog.title }}<BR>
-		The blog preview_text: {{ blog.preview_text }}<BR>
+		the blog created: {{blog.created}}<BR>
+		The blog preview_text: {{ blog.preview_text|linebreaks }}<BR>
+		The blog long_text: {{ blog.long_text|linebreaks }}<BR>
 		The blog main_image: <img src="{{ blog.main_image.url }}"/><BR>
-		The blog long_text: {{ blog.long_text }}<BR>
+		The blog preview_image: <img src="{{ blog.preview_image.url }}"/><BR>
 		
 
 
@@ -21,7 +23,7 @@
 	<!-- node desc is: {{ node.desc }}</p>
 	<p>Node has: 
 	<BR>
-	{%for child in node.node_set.all%}
+	{%for child in node.node_set.all%} <
 	<BR>
 		Name: <a href="../{{child.pk}}">{{child.name}}</a><BR>
 		Desc: {{child.desc}}<BR>
