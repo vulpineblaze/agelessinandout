@@ -20,11 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'pp657r8jxh#=i)^pov0w!oi!!bj$jtrpc5((c*_pb(x9x5yd*d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False    ###
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.yourcompusolutions.com',
+                '.yourcompusolutions.com',
+                '.agelessinandout.com',
+                '.agelessinandout.com',
+                '.localhost.',
+                'locahost']
 
 SITE_ID = 1
 
@@ -85,10 +90,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = "/var/www/django_static/"
+
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 TEMPLATE_CONTEXT_PROCESSORS = ( 'django.contrib.auth.context_processors.auth',
                                 'django.core.context_processors.request', )
 
-MEDIA_ROOT = '/home/ubuntu/django_projs/ageless/media/'
+MEDIA_ROOT = '/var/www/django_media/'
 MEDIA_URL = '/media/'

@@ -13,13 +13,30 @@
   {% endfor %}
 
   {% for text in object.texts.all%}
-    {{ text.text|linebreaks }}
+    {{ text.text|linebreaksbr }}
   {% endfor %}
 
   {% for link in object.links.all%}
   	{% if link.is_youtube %}
-  		<embed width="{{ object.width }}" height="auto"
-			src="{{ link.embed }}?autoplay=true">
+      <style>
+        .video-container {
+          position:relative;
+          padding-bottom:56.25%;
+          padding-top:30px;
+          height:0;
+          overflow:hidden;
+        }
+        .video-container iframe, .video-container object, .video-container embed {
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+        }
+      </style>
+  		<div class="video-container">
+        <embed src="{{ link.embed }}?autoplay=true">
+      </div>
   	{% else %}
     	<a href="{{ link.link }}">{{ link.link }}</a>
   	{% endif %}
