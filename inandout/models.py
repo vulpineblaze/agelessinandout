@@ -35,6 +35,10 @@ class Product(models.Model):
                             blank=True, null=True)
     is_active = models.BooleanField("If unchecked, Product will not display on website",
                             default=False)
+    frontpage = models.BooleanField("If Checked, Product will display on Front Page",
+                            default=False)
+    priority = models.IntegerField("Determines Priorty on the Front Page. Higher numbers show higher on the Front Page.",
+                                    default=1)
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     short_name = models.CharField("Short field used on Product List page",
                             max_length=80)
@@ -56,6 +60,8 @@ class Product(models.Model):
                             default='green')
     def __unicode__(self):              # __unicode__ on Python 2
         return self.short_name
+    def type(self):
+        return "Product"   
 
 class Brand(models.Model):
     """ """
@@ -71,6 +77,10 @@ class Blog(models.Model):
     is_active = models.BooleanField("If unchecked, Blog will not display on website",
                             default=False)
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    frontpage = models.BooleanField("If Checked, Blog will display on Front Page",
+                            default=False)
+    priority = models.IntegerField("Determines Priorty on the Front Page. Higher numbers show higher on the Front Page.",
+                                    default=1)
     title = models.CharField("Blog's title",
                             max_length=80)
     preview_text = models.CharField("Short preview shown in Blog list page",
@@ -88,12 +98,18 @@ class Blog(models.Model):
                             default = 'None/no-img.png')
     def __unicode__(self):              # __unicode__ on Python 2
         return self.title
+    def type(self):
+        return "Blog"  
 
 class Testamonial(models.Model):
     """ """
     is_active = models.BooleanField("If unchecked, Testamonial will not display on website",
                             default=False)
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    frontpage = models.BooleanField("If Checked, Testamonial will display on Front Page",
+                            default=False)
+    priority = models.IntegerField("Determines Priorty on the Front Page. Higher numbers show higher on the Front Page.",
+                                    default=1)
     email_address = models.EmailField("Email address of submitter",
                             blank=True)
     text = models.CharField("Testamonial text",
@@ -102,6 +118,8 @@ class Testamonial(models.Model):
                             max_length=80)
     def __unicode__(self):              # __unicode__ on Python 2
         return self.nickname
+    def type(self):
+        return "Testamonial"  
 
 
 
@@ -147,6 +165,15 @@ class BasePage(models.Model):
     link_hover_color = models.CharField("Link Hover Color. Use HTML acceptable names or Hex Code.",
                                     max_length=60,
                                     default='orange')
+    menu_bar_color = models.CharField("Menu Bar Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='#1d5065')
+    menu_accent_color = models.CharField("Menu Accent Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='#3d7085')
+    menu_background_color = models.CharField("Menu Background Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='#ccc')
     site_name = models.CharField("Facebook API - site name.",
                                     max_length=80,
                                     default='')
@@ -185,14 +212,23 @@ class PageObject(models.Model):
                                 max_length=2, 
                                 choices=PAGE_CHOICES,
                                 default='FP')
+    THIRDS = 270
+    HALF = 420
+    FULL = 880
+    WIDTH_CHOICES = (
+        (THIRDS, 'Thirds'),
+        (HALF, 'Half'),
+        (FULL, 'Full'),
+    )
+    width = models.IntegerField("Set Size (Width) for Object. Be sure that complementary objects exist to prevent issues!",
+                                    choices=WIDTH_CHOICES,
+                                    default=HALF)
     title = models.CharField("Title to appear on admin page.",
                                     max_length=80,
                                     default="delete this to add title.")
     priority = models.IntegerField("Higher numbers show higher on the page.",
                                     default=0)
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
-    width = models.IntegerField("420 for half page, 270 for thirds, 880 for full. Be sure that complementary objects exist to prevent issues!",
-                                    default=420)
     def __unicode__(self):              # __unicode__ on Python 2
         return "Page Object" 
 

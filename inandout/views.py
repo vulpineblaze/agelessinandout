@@ -31,6 +31,7 @@ from oauth2client.django_orm import Storage
 from django.utils.html import escape
 
 
+from itertools import chain
 
 
 
@@ -42,7 +43,14 @@ def home(request):
     basepage =  get_object_or_404(BasePage, pk=1)
     brand_list = Brand.objects.all()
 
-    object_list = PageObject.objects.filter(is_active=True, page='FP').order_by('-priority','-created')
+    product_list = Product.objects.filter(is_active=True, frontpage=True).order_by('-priority','-created')
+
+
+    page_object_list = PageObject.objects.filter(is_active=True, page='FP').order_by('-priority','-created')
+
+    object_list = sorted(
+        chain(product_list, page_object_list),
+        key=lambda instance: instance.priority)
 
     # if request.user.is_authenticated:
     #     # print request.user.keys() #
@@ -55,7 +63,11 @@ def home(request):
     #     #request.user.save()
 
 
-    context = {'frontpage':frontpage,'basepage':basepage,'object_list':object_list,'brand_list':brand_list}
+    context = {'frontpage':frontpage,
+                'basepage':basepage,
+                'object_list':object_list,
+                'brand_list':brand_list
+                }
     return render_to_response('inandout/home.html', context, RequestContext(request))
 
 

@@ -37,7 +37,7 @@
     {% for product in product_list %}
     	{% if product.is_active %}
     		<div class="product-list-object" id="product-object-{{product.brand}}-{{product.id}}">
-    			<a href="../product_detail/{{ product.id }}/">
+    			<a href="{{ product.amazon_link }}">
     			<img class="front-page-object-image" src="{% static product.main_image.url %}"/>
     				<h1 style="text-align: center;">{{ product.short_name }}</h1>
     			</a>
@@ -52,6 +52,31 @@
 
 
     <div class="clear"></div>
+    <div class="line"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     
 <h1>Product Custom Color</h1>
 
@@ -73,7 +98,7 @@
             </style>
             <div class="product-list-cool-object" 
                 id="product-cool-object-{{product.id}}">
-                <a href="../product_detail/{{ product.id }}/">
+                <a href="{{ product.amazon_link }}">
                 <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
                     <P class="product-list-cool-object-text"
                         id="product-list-cool-object-text-{{product.id}}">
@@ -92,6 +117,78 @@
 
 
     <div class="clear"></div>
+    <div class="line"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Product Custom Color w/ Image Hover Zoom</h1>
+
+
+
+
+{% if product_list %}
+    {% for product in product_list %}
+        {% if product.is_active %}
+            <style type="text/css">
+                #product-cool-object-{{product.id}}:after{
+                  background-image: url('{% static product.background_image.url %}');
+                  background-color: {{product.background_and_text_color}};
+                 }
+
+                #product-list-cool-object-text-{{product.id}}{
+                  color: {{product.background_and_text_color}};
+                }
+            </style>
+            <div class="product-list-cool-object img-hover-zoom" 
+                id="product-cool-object-{{product.id}}">
+                <a href="{{ product.amazon_link }}">
+                <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
+                    <P class="product-list-cool-object-text"
+                        id="product-list-cool-object-text-{{product.id}}">
+                        {{ product.short_name }}
+                    </P>
+                </a>
+            </div>
+            
+            
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>No nodes are available.</p>
+{% endif %}
+
+
+
+    <div class="clear"></div>
+    <div class="line"></div>
+
+
+
+
+
+
+
+
+
+
+
 <h1>Product Custom Color with Gradients</h1>
 
 {% if product_list %}
@@ -128,7 +225,7 @@
             </style>
             <div class="product-list-cool-object" 
                 id="product-cool-object-gradient-{{product.id}}">
-                <a href="../product_detail/{{ product.id }}/">
+                <a href="{{ product.amazon_link }}">
                 <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
                     <P class="product-list-cool-object-text"
                         id="product-list-cool-object-text-{{product.id}}">

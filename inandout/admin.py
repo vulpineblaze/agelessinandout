@@ -21,7 +21,7 @@ class ProductForm(forms.ModelForm):
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
-    list_display = ('short_name','is_active','brand','background_and_text_color')
+    list_display = ('short_name','is_active','frontpage','brand','background_and_text_color')
 
 admin.site.register(Product, ProductAdmin)
 
