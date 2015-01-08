@@ -4,56 +4,25 @@
 {% load staticfiles%}
 
 
-<div class="front-page-object" id="object-{{ object.priority }}-{{ object.pk }}"
-  style="width:{{ object.width }};">
+ <style type="text/css">
+    #product-cool-object-{{product.id}}:after{
+      background-image: url('{% static product.background_image.url %}');
+      background-color: {{product.background_and_text_color}};
+     }
 
+    #product-list-cool-object-text-{{product.id}}{
+      color: {{product.background_and_text_color}};
+    }
+</style>
 
-  {% for image in object.images.all%}
-    <div class="img-hover-zoom">
-      <img class="front-page-object-image" src="{% static image.image.url %}"/>
-    </div>
-  {% endfor %}
-
-  {% for text in object.texts.all%}
-    {{ text.text|linebreaksbr }}
-  {% endfor %}
-
-  {% for link in object.links.all%}
-  	{% if link.is_youtube %}
-      <style>
-        .video-container {
-          position:relative;
-          padding-bottom:56.25%;
-          padding-top:30px;
-          height:0;
-          overflow:hidden;
-        }
-        .video-container iframe, .video-container object, .video-container embed {
-          position:absolute;
-          top:0;
-          left:0;
-          width:100%;
-          height:100%;
-        }
-      </style>
-  		<div class="video-container">
-        <embed src="{{ link.embed }}?autoplay=true">
-      </div>
-  	{% else %}
-    	<a href="{{ link.link }}">{{ link.link }}</a>
-  	{% endif %}
-  {% endfor %}
-
-
-  {% if object.frontpage %}
-
-    <div class="front-page-product-object" id="product-object-{{object.brand}}-{{object.id}}">
-      <a href="{{ object.amazon_link }}">
-      <img class="front-page-object-image" src="{% static object.main_image.url %}"/>
-        <h1 style="text-align: center;">{{ object.short_name }}</h1>
-      </a>
-    </div>
-  {% endif %}
-
-
+<div class="product-list-cool-object img-hover-zoom" 
+    id="product-cool-object-{{product.id}}">
+    <a href="{{ product.amazon_link }}">
+    <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
+        <P class="product-list-cool-object-text"
+            id="product-list-cool-object-text-{{product.id}}">
+            {{ product.short_name }}
+        </P>
+    </a>
 </div>
+

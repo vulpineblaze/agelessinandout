@@ -62,7 +62,21 @@ content="http://{{request.get_host}}{{request.get_full_path}}" />
     <script type="text/javascript" src="/static/inandout/js/ddsmoothmenu.js"></script>
     <script type="text/javascript" src="/static/inandout/js/scripts.js"></script>
     <script type="text/javascript" src="/static/inandout/js/main.js"></script>
+    
+    <!--[if lte IE 9]>
+        <script src="/static/inandout/js/html5shiv.min"></script>
+    <![endif]-->
 
+    <script> 
+        var $buoop = {vs:{i:10,f:15,o:12.1,s:5.1},c:2}; 
+        function $buo_f(){ 
+         var e = document.createElement("script"); 
+         e.src = "//browser-update.org/update.js"; 
+         document.body.appendChild(e);
+        };
+        try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+        catch(e){window.attachEvent("onload", $buo_f)}
+    </script> 
 
     <script>
         //~ setInterval(function() {
@@ -625,6 +639,7 @@ pre {
 nav {    
   display: block;
   text-align: center;
+  margin: 0 0 0 5px;
   padding:5px 5px 5px 5px;
   width: 900px;
   border-radius: 10px;
@@ -663,7 +678,7 @@ nav ul {
 .nav > li { 
   float: left; 
   border-bottom: 4px #aaa solid; 
-  /*margin-right: 1px; */
+  /*padding-right: 1px; */
 } 
 .nav > li > a { 
   margin-bottom: 1px;
@@ -786,6 +801,13 @@ nav ul {
   width: 100% !important;
   height: auto !important;
 }
+.front-page-html-object{
+  float:left;
+  margin: 0 0 0 5px; /*top right bottom left  ###*/
+  padding: 0 0 0 0; /*top right bottom left*/
+  border-radius: 4px 4px 4px 4px;
+  border: 5px solid #fff; 
+}
 .front-page-product-object{
   float:left;
   margin: 0 0 0 0; /*top right bottom left*/
@@ -852,7 +874,7 @@ nav ul {
   padding: 15px 5px 25px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
   border: 5px solid #fff; 
-  width:700;
+  width:870;
 }
 .blog-list-object-image{
   display: block;
@@ -867,6 +889,25 @@ nav ul {
   border-radius: 4px 0 0 4px;
   border: 5px solid #fff; 
   width:270;
+}
+.blog-full-entry{
+  float:left;
+  margin: 15px 5px 5px 5px; /*top right bottom left*/
+  padding: 15px 5px 25px 5px; /*top right bottom left*/
+  border-radius: 4px 0 0 4px;
+  border: 5px solid #fff; 
+  width:870;
+}
+.blog-full-entry-image{
+  vertical-align: middle;
+  text-align:center;
+  margin-top:0px;
+  margin-bottom:0px;
+  margin-left:180px;
+  padding:0px;
+  display:block;
+  max-width: 540px !important;
+  height: auto !important;
 }
 
 /* ## ## ## */

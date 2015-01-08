@@ -10,6 +10,9 @@ from django.db import models
 from oauth2client.django_orm import FlowField
 from oauth2client.django_orm import CredentialsField
 
+from tinymce.models import HTMLField
+
+
 
 class CredentialsModel(models.Model):
   id = models.ForeignKey(User, primary_key=True)
@@ -67,6 +70,9 @@ class Brand(models.Model):
     """ """
     is_active = models.BooleanField("If unchecked, Brand will not display on website",
                             default=False)
+    created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    priority = models.IntegerField("Determines Priorty. Higher numbers show higher in list.",
+                                    default=1)
     short_name = models.CharField("Brand Name",
                             max_length=80)    
     def __unicode__(self):              # __unicode__ on Python 2
@@ -85,11 +91,16 @@ class Blog(models.Model):
                             max_length=80)
     preview_text = models.CharField("Short preview shown in Blog list page",
                             max_length=160)
-    long_text = models.CharField("The main text of the Blog",
+    # long_text = models.CharField("The main text of the Blog",
+    #                         max_length=4000)
+    html_text = HTMLField("The main text of the Blog",
                             max_length=4000)
+    author = models.CharField("Author's visible name.",
+                                    max_length=200,
+                                    default=' ')
     fb_author_link = models.CharField("Facebook API - Link to Author's Facebook Page.",
                                     max_length=200,
-                                    default='')
+                                    default=' ')
     main_image = models.ImageField("Image for the blog. Should be a wide rectangle, if possible",
                             upload_to = 'blog_folder/', 
                             default = 'None/no-img.png')
@@ -214,7 +225,7 @@ class PageObject(models.Model):
                                 default='FP')
     THIRDS = 270
     HALF = 420
-    FULL = 880
+    FULL = 870 ###
     WIDTH_CHOICES = (
         (THIRDS, 'Thirds'),
         (HALF, 'Half'),
@@ -265,10 +276,21 @@ class PageObjectLink(models.Model):
     def __unicode__(self):              # __unicode__ on Python 2
         return "Page Object Image"  
     def embed(self):
-        return self.link.replace('watch?v=','embed/')       
+        return self.link.replace('watch?v=','embed/')   
+
+class PageObjectHTML(models.Model):   
+    """ """
+    parent = models.ForeignKey('PageObject',
+                                verbose_name="Which PageObject does this belong to?",
+                                related_name='htmls')
+    content = HTMLField("This will override all other Page Object components!",
+                                    max_length=4000,
+                                    default="delete this to add text.")
+    def __unicode__(self):              # __unicode__ on Python 2
+        return "Page Object HTML"     
 
     # class Meta:
-    #     verbose_name_plural = "FrontPage"        
+    #     verbose_name_plural = "FrontPage"   ###     
 
 # class Question(models.Model):
 #     question_text = models.CharField(max_length=200)

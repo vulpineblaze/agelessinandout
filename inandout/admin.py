@@ -5,6 +5,10 @@ from django import forms
 
 from inandout.models import *
 
+from mce_filebrowser.admin import MCEFilebrowserAdmin
+from tinymce.widgets import TinyMCE
+
+
 # Register your models here.
 
 
@@ -27,31 +31,35 @@ admin.site.register(Product, ProductAdmin)
 
 
 
-# class ProductForm(forms.ModelForm):
+# class BrandForm(forms.ModelForm):
 #     """ """
 #     class Meta:
-#         model = Product
+#         model = Brand
 #         widgets = {
-#             'long_text':forms.Textarea
+#             # 'long_text':forms.Textarea
 #         }
 
-# class ProductAdmin(admin.ModelAdmin):
-#     form = ProductForm
+class BrandAdmin(admin.ModelAdmin):
+#     form = BrandForm
+    list_display = ('short_name','is_active')
 
-admin.site.register(Brand)
+admin.site.register(Brand, BrandAdmin)
 
 
 
 class BlogForm(forms.ModelForm):
     """ """
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 120, 'rows': 30}))
+
     class Meta:
         model = Blog
-        widgets = {
-            'long_text':forms.Textarea
-        }
+        # widgets = {
+        #     'html_text':forms.Textarea ###
+        # }
+        # content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
 
-class BlogAdmin(admin.ModelAdmin):
-    form = BlogForm
+class BlogAdmin(MCEFilebrowserAdmin):
+    # form = BlogForm
     list_display = ('title','is_active')
 
 admin.site.register(Blog, BlogAdmin)
@@ -146,9 +154,21 @@ class PageObjectLinkInline(admin.StackedInline):
     model = PageObjectLink
     extra = 1
 
-class PageObjectAdmin(admin.ModelAdmin):
+class PageObjectHTMLInline(admin.StackedInline):
+    model = PageObjectHTML
+    extra = 1
+
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 1:
+            return False
+        else:
+            return True
+
+class PageObjectAdmin(MCEFilebrowserAdmin):
     list_display = ('title','is_active','priority','width')
-    inlines = [PageObjectTextInline,
+    inlines = [PageObjectHTMLInline,
+                PageObjectTextInline,
                 PageObjectLinkInline,
                 PageObjectImageInline]
 

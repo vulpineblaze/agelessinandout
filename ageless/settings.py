@@ -20,9 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'pp657r8jxh#=i)^pov0w!oi!!bj$jtrpc5((c*_pb(x9x5yd*d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False    ###
+DEBUG = True    ###
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['.yourcompusolutions.com',
                 '.yourcompusolutions.com',
@@ -44,6 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'inandout',
+    'tinymce',
+    'sorl.thumbnail',
+    'mce_filebrowser',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,10 +95,78 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = "/var/www/django_static/"
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+# List of finder classes that know how to find static files in
+# various locations.
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+# )
+
+
+
+
+# TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 TEMPLATE_CONTEXT_PROCESSORS = ( 'django.contrib.auth.context_processors.auth',
                                 'django.core.context_processors.request', )
 
+TEMPLATE_LOADERS = (
+
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+
+)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['/var/www_not/ageless/inandout/templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
+            ],
+        },
+    },
+]
+
 MEDIA_ROOT = '/var/www/django_media/'
 MEDIA_URL = '/media/'
+
+
+
+
+
+# TINYMCE_JS_ROOT = '/media/tiny_mce/'
+# TINYMCE_JS_URL = os.path.join(MEDIA_URL, "tiny_mce/tiny_mce_src.js")
+
+# TINYMCE_JS_URL = STATIC_URL+'inandout/js/tinymce/tinymce.min.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace,preview",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+
+    'file_browser_callback': 'mce_filebrowser',
+
+    'height': "640",
+    'width': "80%",
+    'theme_advanced_buttons3_add' : "preview",
+    'theme_advanced_toolbar_location' : "top",
+    'theme_advanced_toolbar_align' : "left",
+    'theme_advanced_statusbar_location' : "bottom",
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
+
+
+
+

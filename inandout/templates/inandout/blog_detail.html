@@ -8,7 +8,7 @@
 {% csrf_token %}
 
 
-	<p>
+<!-- 	<p>
 		The blog is_active: {{ blog.is_active }}<BR>
 		The blog title: {{ blog.title }}<BR>
 		the blog created: {{blog.created}}<BR>
@@ -17,47 +17,45 @@
 		The blog main_image: <img src="{{ blog.main_image.url }}"/><BR>
 		The blog preview_image: <img src="{{ blog.preview_image.url }}"/><BR>
 		
+###
+
+	</p> -->
+
+	{% if blog.is_active %}
+		<div class="blog-full-entry">
+			
+				<img class="blog-full-entry-image"
+					src="{{ blog.main_image.url }}" alt="{{blog.title}}"/>
+			
+
+			<h1>{{ blog.title }} <div style="font-size:10px; float:right;">{{ blog.created }}</div></h1>
+
+			<h3> By: 
+				{% if blog.fb_author_link != " " %}
+
+					<a href="{{ blog.fb_author_link }}">{{ blog.author }}</a>
+
+				{% else %}
+
+					{{ blog.author }}
+
+				{% endif %}
+
+			</h3>
+
+			<p>
+				{{ blog.html_text|safe }}
+			</p>
+		</div>
+	{% else %}
+
+		<h1>
+			This entry is not available.<BR>
+			Please <a href="http://{{request.get_host}}">check back</a> again!
+
+		</h1>
+
+	{% endif %}
 
 
-	</p>
-	<!-- node desc is: {{ node.desc }}</p>
-	<p>Node has: 
-	<BR>
-	{%for child in node.node_set.all%} <
-	<BR>
-		Name: <a href="../{{child.pk}}">{{child.name}}</a><BR>
-		Desc: {{child.desc}}<BR>
-
-	{%endfor%}
-	<Br><BR>
-	Add a <a href="new_sub_node/">New Property</a>
-
-	</p>
-
-
-	<p>
-	Glue:<BR>
-
-	{%for glue in node.node_parent.all%}
-
-		Name: {{glue.name}}<BR>
-		Parent: <a href="../{{glue.parent.pk}}">{{glue.parent.name}} (aka *this)</a><BR>
-		Child: <a href="../{{glue.child.pk}}">{{glue.child.name}}</a><BR>
-
-	{%endfor%}	
-
-
-	{%for glue in node.node_child.all%}
-
-		Name: {{glue.name}}<BR>
-		Parent: <a href="../{{glue.parent.pk}}">{{glue.parent.name}}</a><BR>
-		Child: <a href="../{{glue.child.pk}}">{{glue.child.name}} (aka *this)</a><BR>
-
-	{%endfor%}	
-
-
-
-	</p>
-
- -->
-	{%endblock%}
+{%endblock%}

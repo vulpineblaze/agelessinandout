@@ -33,13 +33,9 @@
 {% if blog_list %}
     {% for blog in blog_list %}
     	{% if blog.is_active %}
-    		<div class="blog-list-object" id="blog-object-{{blog.id}}">
-    			<a href="../blog_detail/{{ blog.id }}/">
-    			<img class="blog-list-object-image" src="{% static blog.preview_image.url %}"/>
-    				<h1>{{ blog.title }} - <div style="font-size:10px; float:right;">{{ blog.created }}</div></h1>
-    				<h3>{{ blog.preview_text|linebreaks }}</h3>
-    			</a>
-    		</div>
+    		
+            {% include 'inandout/blog_template.html' %} 
+
         	
     	{% endif %}
     {% endfor %}

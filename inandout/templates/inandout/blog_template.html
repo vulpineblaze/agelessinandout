@@ -1,0 +1,14 @@
+
+
+{% load static %}
+{% load staticfiles%}
+
+
+<div class="blog-list-object" id="blog-object-{{blog.id}}">
+  <a href="http://{{request.get_host}}/blog/blog_detail/{{ blog.id }}/">
+  <img class="blog-list-object-image" src="{% static blog.preview_image.url %}"/>
+    <h1>{{ blog.title }} - <div style="font-size:10px; float:right;">{{ blog.created }}</div></h1>
+    <h3>{{ blog.preview_text|linebreaks }}</h3>
+  </a>
+</div>
+

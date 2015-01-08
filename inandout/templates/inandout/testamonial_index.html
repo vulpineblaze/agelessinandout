@@ -19,12 +19,8 @@
 {% if testamonial_list %}
     {% for testamonial in testamonial_list %}
     	{% if testamonial.is_active %}
-    		<div class="testamonial-list-object" id="testamonial-object-{{testamonial.id}}">
-    			{{ testamonial.text|linebreaks }}
-    			<a href="../testamonial_detail/{{ testamonial.id }}/">
-    				<h1 style="text-align: center;"> - {{ testamonial.nickname }}</h1>
-    			</a>
-    		</div>
+    		
+            {% include 'inandout/testamonial_template.html' %} 
         	
     	{% endif %}
     {% endfor %}

@@ -3,57 +3,77 @@
 {% load static %}
 {% load staticfiles%}
 
+{% if object.frontpage and object.type == "Product" %}
 
-<div class="front-page-object" id="object-{{ object.priority }}-{{ object.pk }}"
-  style="width:{{ object.width }};">
+  {% include 'inandout/product_template.html' with product=object %} 
 
+{% elif object.frontpage and object.type == "Blog" %}
 
-  {% for image in object.images.all%}
-    <div class="img-hover-zoom">
-      <img class="front-page-object-image" src="{% static image.image.url %}"/>
-    </div>
-  {% endfor %}
+  {% include 'inandout/blog_template.html' with blog=object %} 
 
-  {% for text in object.texts.all%}
-    {{ text.text|linebreaksbr }}
-  {% endfor %}
+{% elif object.frontpage and object.type == "Testamonial" %}
 
-  {% for link in object.links.all%}
-  	{% if link.is_youtube %}
-      <style>
-        .video-container {
-          position:relative;
-          padding-bottom:56.25%;
-          padding-top:30px;
-          height:0;
-          overflow:hidden;
-        }
-        .video-container iframe, .video-container object, .video-container embed {
-          position:absolute;
-          top:0;
-          left:0;
-          width:100%;
-          height:100%;
-        }
-      </style>
-  		<div class="video-container">
-        <embed src="{{ link.embed }}?autoplay=true">
+  {% include 'inandout/testamonial_template.html' with testamonial=object %} 
+
+{% else %}
+
+  
+
+    {% if object.htmls.all %}
+
+      <div class="front-page-html-object" id="object-html-{{ object.priority }}-{{ object.pk }}"
+            style="width:{{ object.width }};">
+        {% for html in object.htmls.all %}
+          {{ html.content|safe }}
+        {% endfor %}
       </div>
-  	{% else %}
-    	<a href="{{ link.link }}">{{ link.link }}</a>
-  	{% endif %}
-  {% endfor %}
 
+    {% else %}
 
-  {% if object.frontpage %}
+    <div class="front-page-object" id="object-{{ object.priority }}-{{ object.pk }}"
+    style="width:{{ object.width }};">
 
-    <div class="front-page-product-object" id="product-object-{{object.brand}}-{{object.id}}">
-      <a href="{{ object.amazon_link }}">
-      <img class="front-page-object-image" src="{% static object.main_image.url %}"/>
-        <h1 style="text-align: center;">{{ object.short_name }}</h1>
-      </a>
+      {% for image in object.images.all%}
+        <div class="img-hover-zoom">
+          <img class="front-page-object-image" src="{% static image.image.url %}"/>
+        </div>
+      {% endfor %}
+
+      {% for text in object.texts.all%}
+        {{ text.text|linebreaksbr }}
+      {% endfor %}
+
+      {% for link in object.links.all%}
+      	{% if link.is_youtube %}
+          <style>
+            .video-container {
+              position:relative;
+              padding-bottom:56.25%;
+              padding-top:30px;
+              height:0;
+              overflow:hidden;
+            }
+            .video-container iframe, .video-container object, .video-container embed {
+              position:absolute;
+              top:0;
+              left:0;
+              width:100%;
+              height:100%;
+            }
+          </style>
+      		<div class="video-container">
+            <embed src="{{ link.embed }}?autoplay=true">
+          </div>
+      	{% else %}
+        	<a href="{{ link.link }}">{{ link.link }}</a>
+      	{% endif %}
+      {% endfor %}
+
     </div>
-  {% endif %}
+    {% endif %}
 
+  
 
-</div>
+<!-- ### -->
+
+{% endif %}
