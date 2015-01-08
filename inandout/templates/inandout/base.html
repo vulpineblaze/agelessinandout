@@ -192,7 +192,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
 }
 
 /*-----------------------------------------------------------------------------------*/
-/*  GENERAL
+/*  GENERAL                              
 /*-----------------------------------------------------------------------------------*/
 
 html, body {
@@ -206,12 +206,12 @@ body {
 
     font-family:Arial, sans-serif;
     /*font-size: 13px;*/
-    color: #585858;
+    color: {{ basepage.main_text_color }};
 }
 
 p {
-    line-height: 20px;
-    margin-bottom: 20px;
+    line-height: 22px;
+    margin-bottom: 22px;
 }
 
 a {
@@ -226,40 +226,40 @@ a:hover {
 a.more {
     font-family: 'Droid Serif', serif;
     font-style: italic;
-    font-size: 13px;
+    font-size: 18px;
     
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Amaranth', sans-serif;
-    color: #4a4a4a;
+    color: {{ basepage.main_text_color }};
     font-weight: normal;
     margin: 0 0 10px 0;
 }
 h1 {
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 26px;
+    line-height: 30px;
 }
 h2 {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 28px;
 }
 
 h3 {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 22px;
+    line-height: 26px;
 }
 h4 {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 20px;
+    line-height: 24px;
 }
 h5 {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 h6 {
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 22px;
 }
 
 h1.title {
@@ -379,7 +379,7 @@ ul.tabs li a, h2.trigger {
     padding: 0 20px 0 20px;
     height: 26px;
     line-height: 26px;
-    color: #4a4a4a;
+    color: {{ basepage.main_text_color }};
     font-size: 13px;
     border: 1px solid #dbdbdb;
     display: inline-block;
@@ -652,7 +652,7 @@ nav ul {
 }
 .nav a {
   display:block; 
-  color: #fff; 
+  color: {{ basepage.menu_background_color }}; 
   text-decoration: none;
   padding: 0.8em 1.8em;
   text-transform: uppercase;
@@ -794,7 +794,7 @@ nav ul {
   margin: 15px 5px 5px 5px; /*top right bottom left*/
   padding: 15px 5px 5px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
 }
 .front-page-object-image{
   display: block;
@@ -803,10 +803,10 @@ nav ul {
 }
 .front-page-html-object{
   float:left;
-  margin: 0 0 0 5px; /*top right bottom left  ###*/
-  padding: 0 0 0 0; /*top right bottom left*/
+  margin: 15px 0 0 5px; /*top right bottom left  */
+  padding: 0 10px 10px 0; /*top right bottom left*/
   border-radius: 4px 4px 4px 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
 }
 .front-page-product-object{
   float:left;
@@ -821,7 +821,7 @@ nav ul {
   margin: 15px 5px 5px 5px; /*top right bottom left*/
   padding: 15px 5px 5px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
   width:270;
 }
 .product-list-object-image{
@@ -873,7 +873,7 @@ nav ul {
   margin: 15px 5px 5px 5px; /*top right bottom left*/
   padding: 15px 5px 25px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
   width:870;
 }
 .blog-list-object-image{
@@ -887,7 +887,7 @@ nav ul {
   margin: 15px 5px 5px 5px; /*top right bottom left*/
   padding: 15px 5px 5px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
   width:270;
 }
 .blog-full-entry{
@@ -895,7 +895,7 @@ nav ul {
   margin: 15px 5px 5px 5px; /*top right bottom left*/
   padding: 15px 5px 25px 5px; /*top right bottom left*/
   border-radius: 4px 0 0 4px;
-  border: 5px solid #fff; 
+  border: 5px solid {{ basepage.main_border_color }}; 
   width:870;
 }
 .blog-full-entry-image{

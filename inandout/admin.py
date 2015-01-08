@@ -158,12 +158,12 @@ class PageObjectHTMLInline(admin.StackedInline):
     model = PageObjectHTML
     extra = 1
 
-    def has_add_permission(self, request):
-        num_objects = self.model.objects.count()
-        if num_objects >= 1:
-            return False
-        else:
-            return True
+    # def has_add_permission(self, request):
+    #     num_objects = self.model.objects.filter(parent=self.parent).count()
+    #     if num_objects >= 1:
+    #         return False
+    #     else:
+    #         return True
 
 class PageObjectAdmin(MCEFilebrowserAdmin):
     list_display = ('title','is_active','priority','width')

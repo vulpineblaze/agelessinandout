@@ -173,6 +173,12 @@ class BasePage(models.Model):
     banner_image = models.ImageField("Top of page Banner Image.",
                             upload_to = 'basepage_folder/', 
                             default = 'None/no-img.png')
+    main_text_color = models.CharField("Main Text Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='orange')
+    main_border_color = models.CharField("Main Border Color. Use HTML acceptable names or Hex Code.",
+                                    max_length=60,
+                                    default='orange')
     link_hover_color = models.CharField("Link Hover Color. Use HTML acceptable names or Hex Code.",
                                     max_length=60,
                                     default='orange')
@@ -285,7 +291,7 @@ class PageObjectHTML(models.Model):
                                 related_name='htmls')
     content = HTMLField("This will override all other Page Object components!",
                                     max_length=4000,
-                                    default="delete this to add text.")
+                                    default="")
     def __unicode__(self):              # __unicode__ on Python 2
         return "Page Object HTML"     
 
