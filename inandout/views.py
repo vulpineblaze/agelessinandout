@@ -43,7 +43,10 @@ def home(request):
     basepage =  get_object_or_404(BasePage, pk=1)
     brand_list = Brand.objects.filter(is_active=True).order_by('-priority','-created')
 
-    product_list = Product.objects.filter(is_active=True, frontpage=True).order_by('-priority','-created')
+    product_list = Product.objects.filter(is_active=True,
+                                     frontpage=True,
+                                     brand__is_active=True,
+                                     ).order_by('-priority','-created')
     blog_list = Blog.objects.filter(is_active=True, frontpage=True).order_by('-priority','-created')
     testamonial_list = Testamonial.objects.filter(is_active=True, frontpage=True).order_by('-priority','-created')
 
@@ -79,7 +82,10 @@ def product_index(request):
 
     basepage =  BasePage.objects.order_by('?')[0]
     brand_list = Brand.objects.filter(is_active=True).order_by('-priority','-created')
-    product_list = Product.objects.filter(is_active=True).order_by('-priority','-created')
+    product_list = Product.objects.filter(is_active=True,
+                                     #frontpage=True,
+                                     brand__is_active=True,
+                                     ).order_by('-priority','-created')
 
     context = {'product_list': product_list,'basepage':basepage,'brand_list':brand_list}
     return render(request, 'inandout/product_index.html', context)
@@ -182,7 +188,9 @@ def brand_list(request, brand_id):
 
     brand = get_object_or_404(Product, pk=brand_id)
 
-    product_list = Product.objects.filter(brand=brand)
+    product_list = Product.objects.filter(is_active=True,
+                                    brand=brand
+                                    ).order_by('-priority','-created')
 
     context = {'product_list': product_list,'basepage':basepage,'brand_list':brand_list}
     return render(request, 'inandout/product_index.html', context)

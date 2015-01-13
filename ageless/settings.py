@@ -93,7 +93,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/var/www/django_static/"
+STATIC_ROOT = "/var/www/django_static/inandout"
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -138,7 +138,7 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_ROOT = '/var/www/django_media/'
+MEDIA_ROOT = '/var/www/django_media/inandout'
 MEDIA_URL = '/media/'
 
 
