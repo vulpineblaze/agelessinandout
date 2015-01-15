@@ -24,5 +24,20 @@
             {{ product.short_name }}
         </P>
     </a>
+    <p>
+      <a href="#" id="product-list-cool-object-showhide-{{product.id}}-show" class="showLink" onclick="showHide('product-list-cool-object-showhide-{{product.id}}');return false;" style="display:block;text-align:center">
+        Learn More 
+      </a>
+    </p>
+    <div id="product-list-cool-object-showhide-{{product.id}}" class="more">
+      <p>
+        {{ product.long_text }}
+      </p>
+      <p>
+        <a href="#" id="product-list-cool-object-showhide-{{product.id}}-hide" class="hideLink" onclick="showHide('product-list-cool-object-showhide-{{product.id}}');return false;">
+          Hide this content.
+        </a>
+      </p>
+    </div>
 </div>
 

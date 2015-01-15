@@ -783,6 +783,69 @@ nav ul {
     transform:scale(1.1);
 }
 
+/********************    Show / Hide Link            *********************/
+.more {
+  display: none;
+  /*border-top: 1px solid #666;*/
+  /*border-bottom: 1px solid #666; */
+}
+a.hideLink {
+  text-decoration: none;
+  color: {{ basepage.main_text_color }};
+  padding-left: 8px;
+  background: transparent no-repeat left; }
+a.hideLink {
+  background: transparent no-repeat left; }
+a.hideLink:hover {
+  border-bottom: 1px dotted #aaa; 
+}
+a.showLink {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    margin: 0 12px 0 12px;
+    border: 5px solid #293978;
+    border-radius: 37px;
+    background: #ffea05;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffea05), to(#a3911a));
+    background: -moz-linear-gradient(top, #ffea05, #a3911a);
+    background: linear-gradient(to bottom, #ffea05, #a3911a);
+    font: normal normal normal 27px tahoma;
+    color: #293978;
+    text-decoration: none;
+}
+a.showLink:hover,
+a.showLink:focus {
+    border: 5px solid #425bc0;
+    background: #ffff06;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffff06), to(#c4ae1f));
+    background: -moz-linear-gradient(top, #ffff06, #c4ae1f);
+    background: linear-gradient(to bottom, #ffff06, #c4ae1f);
+    color: #293978;
+    text-decoration: none;
+}
+a.showLink:active {
+    background: #998c03;
+    background: -webkit-gradient(linear, left top, left bottom, from(#998c03), to(#a3911a));
+    background: -moz-linear-gradient(top, #998c03, #a3911a);
+    background: linear-gradient(to bottom, #998c03, #a3911a);
+}
+a.showLink:after{
+    content:  "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: 0 -4px -6px 4px;
+    position: relative;
+    top: 0px;
+    left: 4px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABQElEQVRIibXWv0oDQRAG8F8kWFiKWFmFVOJD+KcXEbESHyMEX0UsLUL0CYKF7yCCIFiICCpIsJBwhLPIXbgYuN3LkYFpltnvm/1mZ3Ybyq2NU+xhBxvZ+hcecIcbPAdw5qyFPhKkAU/Qy/ZE2TmGEcD/fYizEHgX4wXAcx+jU5Z5HfAiydxJWgvKUibXTE36gQ1PuK5I0svB28pvyyu20MRVBYIkw3YRCBzhKEtmpSJJFwYRgSMcF0guIwkG8B4Z/FsgaUaSvAnoX1eupCpBik+sZyRreAkRxEqU4ge7GfgqbmMkiilyDr5fAA/1zrTI3SVkPnNNQ42W4nAB8GmjMWnrsuB7k8LGyJL7dFQQN+y+K4DPDTsmI3Zp4zq3Tk2S0geneJKlPZm5tUyKVPvRbwSI2jjBAbaxma1/4FHEt+UPfSWfyFWc5dcAAAAASUVORK5CYII=") no-repeat left center transparent;
+    background-size: 100% 100%;
+}
+
+
 /*****************  Custom Object CSS *********************/
 #disclaimer-text{
   background: {{ basepage.disclaimer_background_color }};
@@ -914,7 +977,20 @@ nav ul {
     </style>
 
 
-
+    <script language="javascript" type="text/javascript">
+    function showHide(shID) {
+       if (document.getElementById(shID)) {
+          if (document.getElementById(shID+'-show').style.display != 'none') {
+             document.getElementById(shID+'-show').style.display = 'none';
+             document.getElementById(shID).style.display = 'block';
+          }
+          else {
+             document.getElementById(shID+'-show').style.display = 'inline';
+             document.getElementById(shID).style.display = 'none';
+          }
+       }
+    }
+    </script>
 
     <script src="https://apis.google.com/js/client:platform.js" async defer></script>
     <script type="text/javascript">
