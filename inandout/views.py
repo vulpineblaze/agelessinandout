@@ -186,7 +186,7 @@ def brand_list(request, brand_id):
     basepage =  get_object_or_404(BasePage, pk=1)
     brand_list = Brand.objects.filter(is_active=True).order_by('-priority','-created')
 
-    brand = get_object_or_404(Product, pk=brand_id)
+    brand = get_object_or_404(Brand, pk=brand_id)
 
     product_list = Product.objects.filter(is_active=True,
                                     brand=brand
