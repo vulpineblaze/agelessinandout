@@ -45,8 +45,13 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     short_name = models.CharField("Short field used on Product List page",
                             max_length=80)
-    long_name = models.CharField("Longer name used in Product detail apge",
-                            max_length=200)
+    long_name = models.CharField("Longer name appended to short name",
+                            max_length=200,
+                            default="")
+    price = models.DecimalField("Price of the Product.",
+                            default="0.00",
+                            max_digits=7,
+                            decimal_places=2)
     long_text = models.CharField("A long description of the product, paragraphs OK",
                             max_length=2000)
     amazon_link = models.URLField("Amazon link to the Products purchase page",
@@ -61,6 +66,12 @@ class Product(models.Model):
     background_and_text_color = models.CharField("Background and Text Color. Use HTML acceptable names or Hex Code.",
                             max_length=20,
                             default='green')
+    info_button_text = models.CharField("Text for the button that drops down the long text. (Overflows after ~14 characters)",
+                            max_length=30,
+                            default="Learn More")
+    purchase_button_text = models.CharField("Text for the button that links to Amazon.  (Overflows after ~14 characters)",
+                            max_length=30,
+                            default="Buy at Amazon!")
     def __unicode__(self):              # __unicode__ on Python 2
         return self.short_name
     def type(self):

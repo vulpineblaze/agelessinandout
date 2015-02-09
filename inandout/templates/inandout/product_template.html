@@ -13,6 +13,9 @@
     #product-list-cool-object-text-{{product.id}}{
       color: {{product.background_and_text_color}};
     }
+    #product-list-cool-object-text-small-{{product.id}}{
+      color: {{product.background_and_text_color}};
+    }
 </style>
 
 <div class="product-list-cool-object img-hover-zoom" 
@@ -21,23 +24,41 @@
     <img class="product-list-cool-object-image" src="{% static product.main_image.url %}"/>
         <P class="product-list-cool-object-text"
             id="product-list-cool-object-text-{{product.id}}">
-            {{ product.short_name }}
+            {{ product.short_name|linebreaksbr }}
+        </P>
+        {% if product.price > 1 %}
+          <P class="product-list-cool-object-text-small"
+            id="product-list-cool-object-text-small-{{product.id}}"
+            style="text-align: center;">
+              ${{ product.price }} USD
+          </P>
+        {% endif %}
+        <P class="product-list-cool-object-text-small"
+            id="product-list-cool-object-text-small-{{product.id}}">
+            {{ product.long_name|linebreaksbr }}
         </P>
     </a>
-    <p>
+    
       <a href="#" id="product-list-cool-object-showhide-{{product.id}}-show" class="showLink" onclick="showHide('product-list-cool-object-showhide-{{product.id}}');return false;" style="display:block;text-align:center">
-        Learn More 
-      </a>
-    </p>
+        {{ product.info_button_text }}
+      </a>     
+    
     <div id="product-list-cool-object-showhide-{{product.id}}" class="more">
       <p>
-        {{ product.long_text }}
+        {{ product.long_text|linebreaksbr }}
       </p>
       <p>
         <a href="#" id="product-list-cool-object-showhide-{{product.id}}-hide" class="hideLink" onclick="showHide('product-list-cool-object-showhide-{{product.id}}');return false;">
           Hide this content.
         </a>
       </p>
+    </div>
+    <div>
+      
+        <a href="{{ product.amazon_link }}" id="product-list-cool-object-showhide-{{product.id}}-amazon-link" class="showLink" style="display:block;text-align:center">
+        {{ product.purchase_button_text }}
+      </a>
+      
     </div>
 </div>
 

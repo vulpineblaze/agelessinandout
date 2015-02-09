@@ -20,6 +20,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         widgets = {
+            'long_name':forms.Textarea,
             'long_text':forms.Textarea
         }
 
