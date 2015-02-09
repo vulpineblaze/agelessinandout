@@ -169,6 +169,8 @@ class BasePage(models.Model):
     site_title = models.CharField("Title to be shown on Browser.",
                                     max_length=80,
                                     default='default CMS title.')
+    testamonials_toggle = models.BooleanField("If unchecked, Testamonials will not display on menu bar.",
+                            default=False)
     disclaimer_text = models.CharField("Disclaimer Text to show on all pages.",
                                     max_length=2000,
                                     default='default disclaimer text.')
