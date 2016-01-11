@@ -693,19 +693,23 @@ a.showLink:after{
           <ul class="nav">
             <li><a href="/" class="active">Home</a>
         </li>
+        {% if basepage.products_toggle %}
         <li><a href="/product/product_index/">Products</a>
             <ul>
                 {% for brand in brand_list %}
                   <li><a href="/product/brand_list/{{ brand.pk }}">{{ brand.short_name }}</a></li>
                 {% endfor %}
             </ul>
-        </li>
+        </li>        
+        {% endif %}
+        {% if basepage.blogs_toggle %}
         <li><a href="/blog/blog_index/">Blogs</a>
             <!-- <ul>
                 <li><a href="/blog/blog_index/">Blogs Subtab #1</a></li>
                 <li><a href="/blog/blog_index/">Blogs Subtab #2</a></li>
             </ul> -->
         </li>
+        {% endif %}
         {% if basepage.testamonials_toggle %}
         <li><a href="/testamonial/testamonial_index/">Testamonials</a>
             <!-- <ul>
@@ -716,8 +720,12 @@ a.showLink:after{
             </ul> -->
         </li>
         {% endif %}
+        {% if basepage.aboutus_toggle %}
         <li><a href="/about_us/" >About Us</a></li>
+        {% endif %}
+        {% if basepage.contact_toggle %}
         <li><a href="/contact_us/" >Contact</a></li>
+        {% endif %}
 
         <li>
             

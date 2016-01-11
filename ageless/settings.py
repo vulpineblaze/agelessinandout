@@ -24,12 +24,13 @@ DEBUG = True    ###
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['.yourcompusolutions.com',
-                '.yourcompusolutions.com',
-                '.agelessinandout.com',
-                '.agelessinandout.com',
-                '.localhost.',
-                'locahost']
+ALLOWED_HOSTS = [] 
+# ALLOWED_HOSTS = ['.yourcompusolutions.com',
+#                 '.yourcompusolutions.com',
+#                 '.agelessinandout.com',
+#                 '.agelessinandout.com',
+#                 '.localhost.',
+#                 'locahost']
 
 SITE_ID = 1
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = (
     'tinymce',
     'sorl.thumbnail',
     'mce_filebrowser',
+    'gunicorn',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,7 +81,8 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
@@ -93,7 +96,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/var/www/django_static/inandout"
+STATIC_ROOT = "/webapps/ageless/livestatic/"
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -104,6 +107,12 @@ STATIC_ROOT = "/var/www/django_static/inandout"
 # )
 
 
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+    # '/var/www/static/',
+    # '/webapps/hello_django/personal_tracker/core/static/',
+    '/webapps/ageless/static/',
+]
 
 
 # TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
@@ -121,7 +130,7 @@ TEMPLATE_LOADERS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/var/www_not/ageless/inandout/templates'],
+        'DIRS': ['/webapps/ageless/inandout/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,11 +147,19 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_ROOT = '/var/www/django_media/inandout'
+MEDIA_ROOT = '/webapps/ageless/media'
 MEDIA_URL = '/media/'
 
 
 
+
+# STATIC_DIR = os.path.join(BASE_DIR, "static")
+# STATIC_JS_DIR = os.path.join(STATIC_DIR, "js")
+# TINYMCE_JS_ROOT = os.path.join(STATIC_JS_DIR, "tiny_mce")
+# TINYMCE_JS_URL = os.path.join(TINYMCE_JS_ROOT, "tiny_mce.js")
+
+# TINYMCE_JS_ROOT=STATIC_ROOT+"static/tiny_mce"
+# TINYMCE_JS_URL=TINYMCE_JS_ROOT+"tiny_mce.js"
 
 
 # TINYMCE_JS_ROOT = '/media/tiny_mce/'
@@ -165,7 +182,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_statusbar_location' : "bottom",
 }
 TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
+TINYMCE_COMPRESSOR = False
 
 
 

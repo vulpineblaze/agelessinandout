@@ -1,0 +1,7 @@
+django==1.7.2
+gunicorn==19.4.3
+django-tinymce==2.2.0
+sorl-thumbnail==12.3
+django-tinymce-filebrowser==0.2.1
+pillow==3.1.0  # has a fuckton of apt-get prereqs
+

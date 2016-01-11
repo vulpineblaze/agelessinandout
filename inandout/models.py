@@ -73,7 +73,7 @@ class Product(models.Model):
                             max_length=30,
                             default="Buy at Amazon!")
     def __unicode__(self):              # __unicode__ on Python 2
-        return self.short_name
+        return unicode(self.short_name) or u''
     def type(self):
         return "Product"   
 
@@ -87,7 +87,7 @@ class Brand(models.Model):
     short_name = models.CharField("Brand Name",
                             max_length=80)    
     def __unicode__(self):              # __unicode__ on Python 2
-        return self.short_name    
+        return unicode(self.short_name) or u''
 
 class Blog(models.Model):
     """ """
@@ -105,7 +105,7 @@ class Blog(models.Model):
     # long_text = models.CharField("The main text of the Blog",
     #                         max_length=4000)
     html_text = HTMLField("The main text of the Blog",
-                            max_length=4000)
+                            max_length=400000)
     author = models.CharField("Author's visible name.",
                                     max_length=200,
                                     default=' ')
@@ -119,7 +119,7 @@ class Blog(models.Model):
                             upload_to = 'blog_folder/', 
                             default = 'None/no-img.png')
     def __unicode__(self):              # __unicode__ on Python 2
-        return self.title
+        return unicode(self.title) or u''
     def type(self):
         return "Blog"  
 
@@ -139,7 +139,7 @@ class Testamonial(models.Model):
     nickname = models.CharField("Nickname of submitter",
                             max_length=80)
     def __unicode__(self):              # __unicode__ on Python 2
-        return self.nickname
+        return unicode(self.nickname) or u''
     def type(self):
         return "Testamonial"  
 
@@ -169,6 +169,14 @@ class BasePage(models.Model):
     site_title = models.CharField("Title to be shown on Browser.",
                                     max_length=80,
                                     default='default CMS title.')
+    products_toggle = models.BooleanField("If unchecked, Products will not display on menu bar.",
+                            default=False)
+    blogs_toggle = models.BooleanField("If unchecked, Blogs will not display on menu bar.",
+                            default=False)
+    aboutus_toggle = models.BooleanField("If unchecked, About Us will not display on menu bar.",
+                            default=False)
+    contact_toggle = models.BooleanField("If unchecked, Contact will not display on menu bar.",
+                            default=False)
     testamonials_toggle = models.BooleanField("If unchecked, Testamonials will not display on menu bar.",
                             default=False)
     disclaimer_text = models.CharField("Disclaimer Text to show on all pages.",

@@ -1,0 +1,198 @@
+
+sudo mkdir -p /webapps/ageless/
+sudo chown ageless /webapps/ageless/
+
+
+
+ sudo su - ageless
+ cd /webapps/ageless/
+ virtualenv .
+ source bin/activate
+
+pip install -r requirements.txt 
+
+
+sudo cp /webapps/ageless/ageless.nginxconf /etc/nginx/sites-available/. 
+sudo ln -s /etc/nginx/sites-available/ageless.nginxconf /etc/nginx/sites-enabled/ageless
+
+sudo cp /webapps/ageless/ageless.conf /etc/supervisor/conf.d/ageless.conf
+
+ mkdir -p /webapps/ageless/logs/
+ touch /webapps/ageless/logs/gunicorn_supervisor.log
+
+  sudo supervisorctl reread
+  sudo supervisorctl update
+  sudo supervisorctl status ageless  
+
+sudo supervisorctl stop ageless  
+sudo supervisorctl start ageless                        
+sudo supervisorctl restart ageless 
+
+
+sudo service nginx restart 
+
+
+
+
+
+# sudo cp /home/ubuntu/django_projs/personal_tracker/per_trk.nginxconf /etc/nginx/sites-available/per_trk
+# sudo cp /webapps/hello_django/per_trk.nginxconf /etc/nginx/sites-available/per_trk
+
+# troubleshooting nginx dual server settings
+
+sudo cp /webapps/hello_django/per_trk.nginxconf /etc/nginx/sites-available/per_trk
+sudo cp /webapps/ageless/ageless.nginxconf /etc/nginx/sites-available/. 
+sudo service nginx restart 
+
+ #super long oneliner restarter
+sudo cp /webapps/ageless/ageless.nginxconf /etc/nginx/sites-available/.  ; sudo cp /webapps/hello_django/per_trk.nginxconf /etc/nginx/sites-available/per_trk ; sudo cp /webapps/ageless/ageless.nginxconf /etc/nginx/sites-available/.  ; sudo supervisorctl restart hello ; sudo supervisorctl restart ageless ;sudo service nginx restart 
+
+
+
+#found my error, need different users
+ sudo useradd --system --gid webapps --shell /bin/bash --home /webapps/ageless ageless
+
+
+# more error, django itself is failing:
+
+pip install tinymce  # and other stuff in requirements.txt now
+
+
+
+#failed first try
+python /webapps/ageless/manage.py createsuperuser
+
+
+ python /webapps/ageless/manage.py makemigrations inandout
+ python /webapps/ageless/manage.py migrate
+
+# needed pillow, and pillow needs: 
+sudo apt-get install libjpeg-dev
+ sudo apt-get install python-dev python-setuptools
+  sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev \
+    libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+
+
+
+yes | python /webapps/ageless/manage.py collectstatic
+
+sudo cp -r /webapps/ageless/livestatic/* /webapps/ageless/static/.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# sudo apt-get update
+# sudo apt-get install python-pip
+
+# sudo apt-get install python-virtualenv
+
+# virtualenv env  
+#  source ./env/bin/activate
+
+# pip install -U pip
+#   pip install django
+# pip install -r requirements.txt
+
+# python manage.py runserver 0.0.0.0:8000
+
+# python manage.py createsuperuser
+
+#  python manage.py makemigrations core
+#  python manage.py migrate
+
+
+# sudo groupadd --system webapps
+# sudo useradd --system --gid webapps --shell /bin/bash --home /webapps/hello_django hello
+
+
+# $ sudo mkdir -p /webapps/hello_django/
+# $ sudo chown hello /webapps/hello_django/
+
+#  sudo su - hello
+#  cd /webapps/hello_django/
+#  virtualenv .
+#  source bin/activate
+
+
+# #not for use:
+#  sudo su - hello 
+#  cd /webapps/hello_django/
+#  source bin/activate
+
+
+#  # pip install gunicorn
+
+#  cp /home/ubuntu/django_projs/personal_tracker/gunicorn_start.bash .
+# chmod 777 gunicorn_start.bash
+
+
+#  sudo apt-get install supervisor
+#  mkdir -p /webapps/hello_django/logs/
+#  touch /webapps/hello_django/logs/gunicorn_supervisor.log
+
+#   sudo cp /webapps/hello_django/hello.conf /etc/supervisor/conf.d/hello.conf
+#   sudo supervisorctl reread
+#   sudo supervisorctl update
+#   sudo supervisorctl status hello  
+
+# #   $ sudo supervisorctl stop hello  
+# # $ sudo supervisorctl start hello                        
+# # $ sudo supervisorctl restart hello 
+
+
+# sudo apt-get install nginx
+
+#  sudo cp /home/ubuntu/django_projs/personal_tracker/per_trk.nginxconf /etc/nginx/sites-available/.
+
+# sudo ln -s /etc/nginx/sites-available/per_trk /etc/nginx/sites-enabled/per_trk
+
+#  sudo service nginx restart 
+
+
+# sudo cp sites-available/default sites-available/default.bak
+
+# sudo rm sites-enabled/default  sites-available/default 
+# sudo cp sites-available/per_trk.nginxconf sites-available/per_trk
+
+#  sudo service nginx restart 
+
+
+
+# #static testing
+#    sudo cp /home/ubuntu/django_projs/personal_tracker/per_trk.nginxconf /etc/nginx/sites-available/. ; sudo supervisorctl restart hello  ;  sudo service nginx restart 
+
+# # to make static:
+# # must be in env as hello
+# yes | python /webapps/hello_django/personal_tracker/manage.py collectstatic
+# # must be sudo'er
+# sudo cp -r livestatic/* static/.
