@@ -1,4 +1,4 @@
-django==1.7.2
+django==2.2.24
 gunicorn==19.4.3
 django-tinymce==2.2.0
 sorl-thumbnail==12.3
